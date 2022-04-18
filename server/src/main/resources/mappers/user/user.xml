@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.happiness.domain.user.repository.UserMapper">
+    <resultMap id="UserDto" type="com.happiness.domain.user.dto.UserDto">
+        <result column="USER_ID" property="userId"/>
+        <result column="USER_PW" property="userPw"/>
+        <result column="USER_NM" property="userNm"/>
+        <result column="IS_BLOCK" property="isBlock"/>
+        <result column="USER_TEL" property="userTel"/>
+        <result column="GENDER" property="gender"/>
+        <result column="USER_MAIL" property="userMail"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="MBTI" property="mbti"/>
+        <result column="BIRTH_DATE" property="birthDate"/>
+        <result column="BIRTH_GIFT" property="birthGift"/>
+        <result column="HAPPINESS" property="happiness"/>
+        <result column="IS_POSTIT" property="isPostit"/>
+    </resultMap>
+
+    <select id="findUserById" parameterType="String" resultMap="UserDto">
+        SELECT
+        USER_ID
+        , USER_PW
+        , USER_NM
+        , IS_BLOCK
+        , USER_TEL
+        , GENDER
+        , USER_MAIL
+        , ADDRESS
+        , MBTI
+        , BIRTH_DATE
+        , BIRTH_GIFT
+        , HAPPINESS
+        , IS_POSTIT
+        , CREATE_DT
+        , CREATE_ID
+        , UPDATE_DT
+        , UPDATE_ID
+        FROM USER_INFO
+        WHERE USER_ID = #{userId}
+    </select>
+
+</mapper>
