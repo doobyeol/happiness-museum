@@ -13,9 +13,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    @Autowired
     private UserService userService;
 
     @Override
