@@ -33,4 +33,6 @@ public class JwtResponse {
         super();
     }
 
+    public JwtResponse(String jwt, String userId, String userNm, String userMail, List<String> roles) {
+    }
 }
