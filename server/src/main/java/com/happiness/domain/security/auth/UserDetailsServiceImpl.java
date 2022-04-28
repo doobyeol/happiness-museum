@@ -15,6 +15,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserDetailsServiceImpl implements UserDetailsService {
+    // AuthenticationManager 로그인 시도를 하면 UserDetailsServiceImpl의 loadUserByUsername 실행
+    // UserMapper.findByUsername(userId) DB의 userId를 확인
 
     @Autowired
     private UserService userService;

@@ -33,16 +33,21 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
+
+            // doFilterInternal에서 Jwt 토큰이 있다면 authentication에
+            // username, role를 넣고 수동으로 인증을 설정하도록 스프링 시큐리티를 구성한다.
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
 
                 log.debug("jwt " + jwt);
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
+                // SecurityContextHolder에 사용자 정보 authentication을 담아준다.
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
@@ -53,8 +58,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     }
 
     private String parseJwt(HttpServletRequest request) {
+        // header에서 Authorization 값을 가져오고 그 값이 있거나
+        // startWith 시작하는 부분이 Bearer로 시작한다면 headerAuth.substring 리턴한다.
         String headerAuth = request.getHeader("Authorization");
-
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(7, headerAuth.length());
         }

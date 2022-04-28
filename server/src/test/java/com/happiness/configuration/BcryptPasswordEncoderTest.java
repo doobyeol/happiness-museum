@@ -15,7 +15,7 @@ public class BcryptPasswordEncoderTest {
         String encoded = passwordEncoder.encode("test123");
         log.info("encoded : {}", encoded);
 
-        boolean result = passwordEncoder.matches("test123", "$2a$10$VbH05m/0tbkPA/tBjy7nCeFmJS.vNNvgot8B5FCW8dbuS1OJgXN.2");
+        boolean result = passwordEncoder.matches("test123", "$2a$10$00DU58jNWcIKTyYbjBuH7OEtvbXq5nupCbWWIsykTi4dE08ipxBra");
         log.info("result {}", result);
 
         Assertions.assertTrue(result);
