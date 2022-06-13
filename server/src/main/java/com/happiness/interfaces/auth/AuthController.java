@@ -2,22 +2,15 @@ package com.happiness.interfaces.auth;
 
 import com.happiness.domain.security.auth.UserDetailsImpl;
 import com.happiness.domain.security.auth.dto.JwtResponse;
-import com.happiness.domain.user.dto.UserDto;
-import com.happiness.interfaces.auth.dto.AuthRequest;
+import com.happiness.interfaces.auth.dto.TokenResponse;
 import com.happiness.interfaces.user.dto.LoginRequest;
 import com.happiness.interfaces.user.dto.LoginResponse;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import com.happiness.domain.security.jwt.JwtUtils;
@@ -79,7 +72,7 @@ public class AuthController {
      * refresh token 재발급
      */
     @GetMapping("/getRefreshToken")
-    public JwtResponse getRefreshToken(HttpServletRequest request) {
+    public TokenResponse getRefreshToken(HttpServletRequest request) {
         String token = "";
         String refreshToken = "";
 
@@ -92,12 +85,12 @@ public class AuthController {
             refreshToken = jwtUtils.generateRefreshJwtToken(token);
         }
 
-        JwtResponse jwtResponse = JwtResponse.builder()
+        TokenResponse tokenResponse = TokenResponse.builder()
                 .token(token)
                 .refreshToken(refreshToken)
                 .build();
 
-        return jwtResponse;
+        return tokenResponse;
     }
 
     private String parseJwt(HttpServletRequest request) {
