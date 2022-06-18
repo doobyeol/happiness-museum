@@ -12,10 +12,10 @@ public class BcryptPasswordEncoderTest {
     @Test
     public void testEncode() {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encoded = passwordEncoder.encode("test123");
+        String encoded = passwordEncoder.encode("1234");
         log.info("encoded : {}", encoded);
 
-        boolean result = passwordEncoder.matches("test123", "$2a$10$00DU58jNWcIKTyYbjBuH7OEtvbXq5nupCbWWIsykTi4dE08ipxBra");
+        boolean result = passwordEncoder.matches("1234", "$2a$10$4wonBcMqO2RI581XCz0LT.BCLoE/sI2nTzQ.ZBW/03RhYAMAh1YVm");
         log.info("result {}", result);
 
         Assertions.assertTrue(result);
