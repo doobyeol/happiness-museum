@@ -1,21 +1,21 @@
 package com.happiness.interfaces.auth;
 
+import com.happiness.domain.common.constants.ResultCode;
 import com.happiness.domain.security.auth.UserDetailsImpl;
-import com.happiness.domain.security.auth.dto.JwtResponse;
+import com.happiness.interfaces.auth.dto.RefreshTokenRequest;
 import com.happiness.interfaces.auth.dto.TokenResponse;
-import com.happiness.interfaces.user.dto.LoginRequest;
-import com.happiness.interfaces.user.dto.LoginResponse;
+import com.happiness.interfaces.common.dto.ResponseDto;
+import com.happiness.interfaces.auth.dto.LoginRequest;
+import com.happiness.interfaces.auth.dto.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import com.happiness.domain.security.jwt.JwtUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +34,8 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseDto<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+
         // username, password 틀리면 AuthEntryPointJwt 호출하여 에러 메세지가 나온다.
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken
@@ -65,24 +66,26 @@ public class AuthController {
                 .build();
 
         // 반환 값으로 loginResponse를 반환한다.
-        return loginResponse;
+        return ResponseDto.ok(loginResponse);
     }
 
     /**
      * refresh token 재발급
      */
-    @GetMapping("/getRefreshToken")
-    public TokenResponse getRefreshToken(HttpServletRequest request) {
+    @PostMapping("/token/refresh")
+    public ResponseDto<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         String token = "";
         String refreshToken = "";
 
-        // Token 유효성 확인
-        if (jwtUtils.validateJwtToken(parseJwt(request))) {
-            // Token 생성
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String legacyRefreshToken = refreshTokenRequest.getRefreshToken();
 
-            token = jwtUtils.generateJwtToken(authentication);
+        // Token 유효성 확인
+        if (jwtUtils.validateJwtToken(legacyRefreshToken)) {
+            // Token 생성
+            token = jwtUtils.generateJwtToken(legacyRefreshToken);
             refreshToken = jwtUtils.generateRefreshJwtToken(token);
+        } else {
+            return ResponseDto.fail(ResultCode.INVALID_REFRESH_TOKEN);
         }
 
         TokenResponse tokenResponse = TokenResponse.builder()
@@ -90,18 +93,7 @@ public class AuthController {
                 .refreshToken(refreshToken)
                 .build();
 
-        return tokenResponse;
-    }
-
-    private String parseJwt(HttpServletRequest request) {
-        // header에서 Authorization 값을 가져오고 그 값이 있거나
-        // startWith 시작하는 부분이 Bearer로 시작한다면 headerAuth.substring 리턴한다.
-        String headerAuth = request.getHeader("Authorization");
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
-            return headerAuth.substring(7, headerAuth.length());
-        }
-
-        return null;
+        return ResponseDto.ok(tokenResponse);
     }
 
 }

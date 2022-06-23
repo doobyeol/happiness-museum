@@ -1,4 +1,4 @@
-package com.happiness.interfaces.user.dto;
+package com.happiness.interfaces.auth.dto;
 
 import lombok.Builder;
 import lombok.Getter;

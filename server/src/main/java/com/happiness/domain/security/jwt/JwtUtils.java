@@ -67,12 +67,12 @@ public class JwtUtils {
         String jwtToken = "";
         if("local".equals(activeProfile) || "dev".equals(activeProfile)) {
             jwtToken = Jwts.builder()
-                        .setSubject((username))
+                        .setSubject(username)
                         .setIssuedAt(new Date())
                         .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
         } else {
             jwtToken = Jwts.builder()
-                        .setSubject((username))
+                        .setSubject(username)
                         .setIssuedAt(new Date())
                         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                         .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
