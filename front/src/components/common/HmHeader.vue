@@ -1,16 +1,21 @@
 <template>
   <div>
-    <v-app-bar
-      color="amber"
-      dark
-    >
+    <v-app-bar color="amber" dark>
       <v-toolbar-title>행복박물관</v-toolbar-title>
-      <v-toolbar-items class='hidden-sm-and-down ml-auto'>
-        <v-btn v-for='item in menu' :key='item.title' :to='item.link' text>
+      <v-toolbar-items class="hidden-sm-and-down ml-auto">
+        <v-btn
+          v-for="item in menu"
+          :key="item.title"
+          :to="item.link"
+          text
+        >
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
-      <v-app-bar-nav-icon class="ml-auto hidden-md-and-up" @click="drawer = true"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        class="ml-auto hidden-md-and-up"
+        @click="drawer = true"
+      ></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -21,18 +26,12 @@
       color="amber accent-4"
       dark
     >
-      <v-list
-        nav
-        dense
-      >
+      <v-list nav dense>
         <v-list-item-group
           v-model="group"
           active-class="brown--text text--accent-4"
         >
-          <v-list-item
-            v-for='item in menu'
-            :key='item.title'
-          >
+          <v-list-item v-for="item in menu" :key="item.title">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -45,8 +44,9 @@
 </template>
 
 <script>
+
 export default {
-  name: 'HelloWorld',
+  name: 'HmHeader',
   props: {
     msg: String
   },
