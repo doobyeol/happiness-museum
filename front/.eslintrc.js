@@ -32,6 +32,7 @@ module.exports = {
 				bracketSpacing: true,
 				arrowParens: 'avoid',
 				endOfLine: 'auto',
+				// spaceBeforeFunctionParen: true,
 			},
 		],
 		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',

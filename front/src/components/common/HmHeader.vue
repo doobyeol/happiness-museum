@@ -1,7 +1,10 @@
 <template>
 	<div>
-		<v-app-bar color="amber" dark>
-			<v-toolbar-title>행복박물관</v-toolbar-title>
+		<v-app-bar color="white">
+			<v-toolbar-title>
+				<v-img src="@/assets/logo.png" width="160px"></v-img>
+				<!-- <img src="../../assets/logo.png" class="logo mt-2" /> -->
+			</v-toolbar-title>
 			<v-toolbar-items class="hidden-sm-and-down ml-auto">
 				<v-btn v-for="item in menu" :key="item.title" :to="item.link" text>
 					{{ item.title }}
@@ -18,17 +21,17 @@
 			absolute
 			temporary
 			right
-			color="amber accent-4"
-			dark
+			color="amber lighten-2"
 		>
 			<v-list nav dense>
 				<v-list-item-group
 					v-model="group"
+					dark
 					active-class="brown--text text--accent-4"
 				>
 					<v-list-item v-for="item in menu" :key="item.title">
 						<v-list-item-icon>
-							<v-icon>{{ item.icon }}</v-icon>
+							<v-icon color="">{{ item.icon }}</v-icon>
 						</v-list-item-icon>
 						<v-list-item-title>{{ item.title }}</v-list-item-title>
 					</v-list-item>
@@ -74,5 +77,9 @@ export default {
 <style>
 .v-application--wrap {
 	overflow-x: hidden !important;
+}
+
+.logo {
+	width: 160px;
 }
 </style>
