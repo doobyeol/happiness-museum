@@ -1,9 +1,14 @@
 <template>
 	<div>
-		<v-app-bar color="white">
+		<v-app-bar
+			color="white"
+			fixed
+			elevation="4"
+			:fade-img-on-scroll="true"
+			flat
+		>
 			<v-toolbar-title>
-				<v-img src="@/assets/logo.png" width="160px"></v-img>
-				<!-- <img src="../../assets/logo.png" class="logo mt-2" /> -->
+				<v-img src="@/assets/logo.png" width="120px"></v-img>
 			</v-toolbar-title>
 			<v-toolbar-items class="hidden-sm-and-down ml-auto">
 				<v-btn v-for="item in menu" :key="item.title" :to="item.link" text>
@@ -26,7 +31,6 @@
 			<v-list nav dense>
 				<v-list-item-group
 					v-model="group"
-					dark
 					active-class="brown--text text--accent-4"
 				>
 					<v-list-item v-for="item in menu" :key="item.title">
@@ -79,7 +83,9 @@ export default {
 	overflow-x: hidden !important;
 }
 
-.logo {
-	width: 160px;
+header {
+	position: fixed;
+	top: 0;
+	width: 100%;
 }
 </style>

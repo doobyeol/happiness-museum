@@ -39,6 +39,9 @@ export default {
 </script>
 
 <style scoped>
+ul#stickies {
+	display: flow-root;
+}
 ul#stickies li {
 	display: block;
 	list-style: none;
