@@ -1,0 +1,30 @@
+{
+  "redhat.telemetry.enabled": true,
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Night Owl",
+  "editor.wordWrap": "on",
+  "editor.accessibilitySupport": "off",
+  "editor.formatOnPaste": true,
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": {
+      "wrap_attributes": "force-expand-multiline"
+    },
+    "prettyhtml": {
+      "printWidth": 100,
+      "singleQuote": false,
+      "wrapAttributes": false,
+      "sortAttributes": false
+    }
+  },
+  // eslint 설정
+  "eslint.validate":  ["vue", "html", "javascript"],
+  "eslint.alwaysShowStatus": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  // eslint 저장시 자동 교정
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"c:\\Users\\user\\.vscode\\extensions\\gabrielbb.vscode-lombok-1.0.1\\server\\lombok.jar\"",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  // "editor.guides.bracketPairs": true
+}
