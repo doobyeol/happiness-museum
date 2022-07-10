@@ -54,7 +54,6 @@ export default {
 	data() {
 		return {
 			menu: [
-				{ icon: 'mdi-home', title: '홈' },
 				{ icon: 'mdi-bank', title: '박물관 소개' },
 				{ icon: 'mdi-flower', title: '행복 전시' },
 				{ icon: 'mdi-bookmark', title: '소장품' },

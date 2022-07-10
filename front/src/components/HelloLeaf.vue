@@ -6,12 +6,16 @@
 		<p class="mt-10 font-weight-bold text-center text-h5">
 			행복이란 무엇일까요?
 		</p>
-		<ul id="stickies">
-			<li v-for="item in myHappiness" :key="item.title">
-				<span>{{ item.title }}</span>
-				<p class="pl-16 ml-10 pt-16 mt-7 caption">- {{ item.name }}</p>
-			</li>
-		</ul>
+		<v-slide-group show-arrows>
+			<ul id="stickies" class="d-flex flex-wrap justify-center">
+				<v-slide-item v-for="item in myHappiness" :key="item.title">
+					<li>
+						<span>{{ item.title }}</span>
+						<p>- {{ item.name }}</p>
+					</li>
+				</v-slide-item>
+			</ul>
+		</v-slide-group>
 	</v-container>
 </template>
 
@@ -39,22 +43,19 @@ export default {
 </script>
 
 <style scoped>
-ul#stickies {
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hi+Melody&family=Jua&family=Nanum+Pen+Script&family=Stylish&family=Yeon+Sung&display=swap');
+
+#stickies {
 	display: flow-root;
 }
-ul#stickies li {
-	display: block;
-	list-style: none;
+#stickies li {
 	z-index: 1;
-	float: left;
 	margin: 30px;
 	padding: 15px 15px 50px 15px;
-	width: 200px;
-	height: 200px;
-	/* border: 1px solid #bfbfbf; */
-	background-color: rgb(255, 231, 125); /* 색상명 값이 맞지 않을 땐 #fafad2 */
-	color: black;
-	text-decoration: none;
+	width: 210px;
+	height: 210px;
+	background-color: rgb(255, 231, 125);
+	font-size: 1.4rem;
 	-webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 	-moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 	-o-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
@@ -65,15 +66,18 @@ ul#stickies li {
 	-ms-transition: all 0.2s ease-in;
 	transition: all 0.2s ease-in;
 	overflow: hidden;
+	white-space: break-spaces !important;
 }
 
-/* ul#stickies li span.sticky {
-	font-family: Verdana, Helvetica, sans-serif;
-	font-size: 200%;
-} */
+#stickies li p {
+	position: absolute;
+	right: 20px;
+	bottom: 10px;
+}
 
 /* 회전 */
-ul#stickies li:nth-child(even) {
+#stickies li:nth-child(even) {
+	font-family: 'Nanum Pen Script', cursive;
 	-webkit-transform: rotate(2deg);
 	-moz-transform: rotate(2deg);
 	-o-transform: rotate(2deg);
@@ -81,7 +85,8 @@ ul#stickies li:nth-child(even) {
 	transform: rotate(2deg);
 }
 
-ul#stickies li:nth-child(odd) {
+#stickies li:nth-child(odd) {
+	font-family: 'Hi Melody', cursive;
 	-webkit-transform: rotate(-1deg);
 	-moz-transform: rotate(-1deg);
 	-o-transform: rotate(-1deg);
@@ -89,7 +94,8 @@ ul#stickies li:nth-child(odd) {
 	transform: rotate(-1deg);
 }
 
-ul#stickies li:nth-child(3n) {
+#stickies li:nth-child(3n) {
+	font-family: 'Yeon Sung', cursive;
 	-webkit-transform: rotate(1deg);
 	-moz-transform: rotate(1deg);
 	-o-transform: rotate(1deg);
@@ -97,17 +103,10 @@ ul#stickies li:nth-child(3n) {
 	transform: rotate(1deg);
 }
 
-/* 변형 데모 - 위에 정의한 전환을 이용해서 서서히 변형시킴 */
-ul#stickies li:hover {
-	cursor: pointer;
+#stickies li:hover {
+	z-index: 10;
 	-webkit-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
 	-moz-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
 	-o-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
-	/* -webkit-transform: rotate(0deg) scale(1.25);
-	-moz-transform: rotate(0deg) scale(1.25);
-	-o-transform: rotate(0deg) scale(1.25);
-	-ms-transform: rotate(0deg) scale(1.25);
-	transform: rotate(0deg) scale(1.25); */
-	z-index: 10;
 }
 </style>
