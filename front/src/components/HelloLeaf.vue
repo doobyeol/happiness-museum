@@ -6,18 +6,34 @@
 		<p class="mt-10 font-weight-bold text-center text-h5">
 			행복이란 무엇일까요?
 		</p>
-		<ul id="stickies">
-			<li v-for="item in myHappiness" :key="item.title">
-				<span>{{ item.title }}</span>
-				<p class="pl-16 ml-10 pt-16 mt-7 caption">- {{ item.name }}</p>
-			</li>
-		</ul>
+		<v-row>
+			<v-col class="stickies">
+				<VueDragResize
+					:isActive="false"
+					:preventActiveBehavior="false"
+					:isResizable="false"
+					:x="setPosition('x')"
+					:y="setPosition('y')"
+					@clicked="onActivated"
+					v-for="item in myHappiness"
+					:key="item.title"
+				>
+					<span>{{ item.title }}</span>
+					<p>- {{ item.name }}</p>
+				</VueDragResize>
+			</v-col>
+		</v-row>
 	</v-container>
 </template>
 
 <script>
+import VueDragResize from 'vue-drag-resize';
+
 export default {
 	name: 'HelloLeaf',
+	components: {
+		VueDragResize,
+	},
 	props: {
 		msg: String,
 	},
@@ -33,28 +49,50 @@ export default {
 				{ title: '선생님이랑 애같코 하기', name: '두벼리' },
 				{ title: '잘생긴 선생님 얼굴 구경하기', name: '두벼리' },
 			],
+			zIndex: 0,
 		};
+	},
+	methods: {
+		onActivated(event) {
+			event.target.style.zIndex = this.zIndex++;
+		},
+
+		setPosition(xOrY) {
+			const xStart = 80;
+			const xEnd = 880;
+			const yStart = 200;
+			const yEnd = 300;
+			let result = 0;
+
+			if (xOrY == 'x') {
+				result = Math.random() * (xEnd - xStart) + xStart;
+			} else {
+				result = Math.random() * (yEnd - yStart) + yEnd;
+			}
+
+			return result;
+		},
 	},
 };
 </script>
 
-<style scoped>
-ul#stickies {
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hi+Melody&family=Jua&family=Nanum+Pen+Script&family=Stylish&family=Yeon+Sung&display=swap');
+
+.vdr.active:before {
+	outline: none !important;
+}
+
+.stickies {
 	display: flow-root;
 }
-ul#stickies li {
-	display: block;
-	list-style: none;
+.stickies .content-container {
 	z-index: 1;
-	float: left;
-	margin: 30px;
 	padding: 15px 15px 50px 15px;
-	width: 200px;
-	height: 200px;
-	/* border: 1px solid #bfbfbf; */
-	background-color: rgb(255, 231, 125); /* 색상명 값이 맞지 않을 땐 #fafad2 */
-	color: black;
-	text-decoration: none;
+	width: 210px;
+	height: 210px;
+	background-color: rgb(255, 231, 125);
+	font-size: 1.4rem;
 	-webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 	-moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 	-o-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
@@ -65,15 +103,18 @@ ul#stickies li {
 	-ms-transition: all 0.2s ease-in;
 	transition: all 0.2s ease-in;
 	overflow: hidden;
+	white-space: break-spaces !important;
 }
 
-/* ul#stickies li span.sticky {
-	font-family: Verdana, Helvetica, sans-serif;
-	font-size: 200%;
-} */
+.stickies .content-container p {
+	position: absolute;
+	right: 20px;
+	bottom: 10px;
+}
 
 /* 회전 */
-ul#stickies li:nth-child(even) {
+.stickies .vdr:nth-child(even) .content-container {
+	font-family: 'Nanum Pen Script', cursive;
 	-webkit-transform: rotate(2deg);
 	-moz-transform: rotate(2deg);
 	-o-transform: rotate(2deg);
@@ -81,7 +122,8 @@ ul#stickies li:nth-child(even) {
 	transform: rotate(2deg);
 }
 
-ul#stickies li:nth-child(odd) {
+.stickies .vdr:nth-child(odd) .content-container {
+	font-family: 'Hi Melody', cursive;
 	-webkit-transform: rotate(-1deg);
 	-moz-transform: rotate(-1deg);
 	-o-transform: rotate(-1deg);
@@ -89,7 +131,8 @@ ul#stickies li:nth-child(odd) {
 	transform: rotate(-1deg);
 }
 
-ul#stickies li:nth-child(3n) {
+.stickies .vdr:nth-child(3n) .content-container {
+	font-family: 'Yeon Sung', cursive;
 	-webkit-transform: rotate(1deg);
 	-moz-transform: rotate(1deg);
 	-o-transform: rotate(1deg);
@@ -97,17 +140,10 @@ ul#stickies li:nth-child(3n) {
 	transform: rotate(1deg);
 }
 
-/* 변형 데모 - 위에 정의한 전환을 이용해서 서서히 변형시킴 */
-ul#stickies li:hover {
+.stickies .content-container:hover {
 	cursor: pointer;
 	-webkit-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
 	-moz-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
 	-o-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
-	/* -webkit-transform: rotate(0deg) scale(1.25);
-	-moz-transform: rotate(0deg) scale(1.25);
-	-o-transform: rotate(0deg) scale(1.25);
-	-ms-transform: rotate(0deg) scale(1.25);
-	transform: rotate(0deg) scale(1.25); */
-	z-index: 10;
 }
 </style>

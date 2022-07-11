@@ -4,8 +4,10 @@ import './registerServiceWorker';
 import router from './router';
 import store from './store';
 import vuetify from '@/plugins/vuetify';
+import vueDragResize from 'vue-drag-resize';
 
 Vue.config.productionTip = false;
+Vue.component('vue-drag-resize', vueDragResize);
 
 new Vue({
 	router,
