@@ -6,22 +6,34 @@
 		<p class="mt-10 font-weight-bold text-center text-h5">
 			행복이란 무엇일까요?
 		</p>
-		<v-slide-group show-arrows>
-			<ul id="stickies" class="d-flex flex-wrap justify-center">
-				<v-slide-item v-for="item in myHappiness" :key="item.title">
-					<li>
-						<span>{{ item.title }}</span>
-						<p>- {{ item.name }}</p>
-					</li>
-				</v-slide-item>
-			</ul>
-		</v-slide-group>
+		<v-row>
+			<v-col class="stickies">
+				<VueDragResize
+					:isActive="false"
+					:preventActiveBehavior="false"
+					:isResizable="false"
+					:x="setPosition('x')"
+					:y="setPosition('y')"
+					@clicked="onActivated"
+					v-for="item in myHappiness"
+					:key="item.title"
+				>
+					<span>{{ item.title }}</span>
+					<p>- {{ item.name }}</p>
+				</VueDragResize>
+			</v-col>
+		</v-row>
 	</v-container>
 </template>
 
 <script>
+import VueDragResize from 'vue-drag-resize';
+
 export default {
 	name: 'HelloLeaf',
+	components: {
+		VueDragResize,
+	},
 	props: {
 		msg: String,
 	},
@@ -37,20 +49,45 @@ export default {
 				{ title: '선생님이랑 애같코 하기', name: '두벼리' },
 				{ title: '잘생긴 선생님 얼굴 구경하기', name: '두벼리' },
 			],
+			zIndex: 0,
 		};
+	},
+	methods: {
+		onActivated(event) {
+			event.target.style.zIndex = this.zIndex++;
+		},
+
+		setPosition(xOrY) {
+			const xStart = 80;
+			const xEnd = 880;
+			const yStart = 200;
+			const yEnd = 300;
+			let result = 0;
+
+			if (xOrY == 'x') {
+				result = Math.random() * (xEnd - xStart) + xStart;
+			} else {
+				result = Math.random() * (yEnd - yStart) + yEnd;
+			}
+
+			return result;
+		},
 	},
 };
 </script>
 
-<style scoped>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hi+Melody&family=Jua&family=Nanum+Pen+Script&family=Stylish&family=Yeon+Sung&display=swap');
 
-#stickies {
+.vdr.active:before {
+	outline: none !important;
+}
+
+.stickies {
 	display: flow-root;
 }
-#stickies li {
+.stickies .content-container {
 	z-index: 1;
-	margin: 30px;
 	padding: 15px 15px 50px 15px;
 	width: 210px;
 	height: 210px;
@@ -69,14 +106,14 @@ export default {
 	white-space: break-spaces !important;
 }
 
-#stickies li p {
+.stickies .content-container p {
 	position: absolute;
 	right: 20px;
 	bottom: 10px;
 }
 
 /* 회전 */
-#stickies li:nth-child(even) {
+.stickies .vdr:nth-child(even) .content-container {
 	font-family: 'Nanum Pen Script', cursive;
 	-webkit-transform: rotate(2deg);
 	-moz-transform: rotate(2deg);
@@ -85,7 +122,7 @@ export default {
 	transform: rotate(2deg);
 }
 
-#stickies li:nth-child(odd) {
+.stickies .vdr:nth-child(odd) .content-container {
 	font-family: 'Hi Melody', cursive;
 	-webkit-transform: rotate(-1deg);
 	-moz-transform: rotate(-1deg);
@@ -94,7 +131,7 @@ export default {
 	transform: rotate(-1deg);
 }
 
-#stickies li:nth-child(3n) {
+.stickies .vdr:nth-child(3n) .content-container {
 	font-family: 'Yeon Sung', cursive;
 	-webkit-transform: rotate(1deg);
 	-moz-transform: rotate(1deg);
@@ -103,8 +140,8 @@ export default {
 	transform: rotate(1deg);
 }
 
-#stickies li:hover {
-	z-index: 10;
+.stickies .content-container:hover {
+	cursor: pointer;
 	-webkit-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
 	-moz-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
 	-o-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
