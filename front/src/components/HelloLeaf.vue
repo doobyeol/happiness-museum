@@ -1,28 +1,24 @@
 <template>
-	<v-container>
+	<v-container class="mainWrap">
 		<p class="mt-10 font-weight-bold text-center text-h3">
 			Welcome To The Happiness Museum 🌻
 		</p>
 		<p class="mt-10 font-weight-bold text-center text-h5">
 			행복이란 무엇일까요?
 		</p>
-		<v-row>
-			<v-col class="stickies">
-				<VueDragResize
-					:isActive="false"
-					:preventActiveBehavior="false"
-					:isResizable="false"
-					:x="setPosition('x')"
-					:y="setPosition('y')"
-					@clicked="onActivated"
-					v-for="item in myHappiness"
-					:key="item.title"
-				>
-					<span>{{ item.title }}</span>
-					<p>- {{ item.name }}</p>
-				</VueDragResize>
-			</v-col>
-		</v-row>
+		<div class="stickies d-flex flex-wrap justify-center">
+			<VueDragResize
+				:isActive="false"
+				:preventActiveBehavior="false"
+				:isResizable="false"
+				@clicked="onActivated"
+				v-for="item in myHappiness"
+				:key="item.title"
+			>
+				<span>{{ item.title }}</span>
+				<p>- {{ item.name }}</p>
+			</VueDragResize>
+		</div>
 	</v-container>
 </template>
 
@@ -58,10 +54,10 @@ export default {
 		},
 
 		setPosition(xOrY) {
-			const xStart = 80;
+			const xStart = 40;
 			const xEnd = 880;
-			const yStart = 200;
-			const yEnd = 300;
+			const yStart = 100;
+			const yEnd = 200;
 			let result = 0;
 
 			if (xOrY == 'x') {
@@ -79,18 +75,31 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hi+Melody&family=Jua&family=Nanum+Pen+Script&family=Stylish&family=Yeon+Sung&display=swap');
 
+html {
+	overflow-y: auto !important;
+}
+
+.mainWrap {
+	height: calc(100vh - 64px);
+}
+
+.vdr,
+.vdr.active:before {
+	position: relative !important;
+}
+
 .vdr.active:before {
 	outline: none !important;
+	position: absolute;
 }
 
 .stickies {
 	display: flow-root;
+	position: relative;
 }
 .stickies .content-container {
 	z-index: 1;
 	padding: 15px 15px 50px 15px;
-	width: 210px;
-	height: 210px;
 	background-color: rgb(255, 231, 125);
 	font-size: 1.4rem;
 	-webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
