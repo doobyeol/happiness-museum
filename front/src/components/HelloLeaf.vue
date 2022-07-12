@@ -1,24 +1,33 @@
 <template>
 	<v-container class="mainWrap">
-		<p class="mt-10 font-weight-bold text-center text-h3">
-			Welcome To The Happiness Museum 🌻
-		</p>
-		<p class="mt-10 font-weight-bold text-center text-h5">
-			행복이란 무엇일까요?
-		</p>
-		<div class="stickies d-flex flex-wrap justify-center">
-			<VueDragResize
-				:isActive="false"
-				:preventActiveBehavior="false"
-				:isResizable="false"
-				@clicked="onActivated"
-				v-for="item in myHappiness"
-				:key="item.title"
-			>
-				<span>{{ item.title }}</span>
-				<p>- {{ item.name }}</p>
-			</VueDragResize>
-		</div>
+		<v-row class="pt-14">
+			<v-col cols="12">
+				<p class="font-weight-bold text-center text-h3">
+					Welcome To The Happiness Museum 🌻
+				</p>
+			</v-col>
+
+			<v-col cols="12">
+				<p class="font-weight-bold text-center text-h5">행복이란 무엇일까요?</p>
+			</v-col>
+		</v-row>
+		<v-row class="py-0 mt-0">
+			<div class="stickies d-flex flex-wrap justify-center">
+				<VueDragResize
+					:isActive="false"
+					:preventActiveBehavior="false"
+					:isResizable="false"
+					@clicked="onActivated"
+					v-for="item in myHappiness"
+					:key="item.title"
+					:x="setPosition('x')"
+					:y="setPosition('y')"
+				>
+					<span>{{ item.title }}</span>
+					<p>- {{ item.name }}</p>
+				</VueDragResize>
+			</div>
+		</v-row>
 	</v-container>
 </template>
 
@@ -36,6 +45,18 @@ export default {
 	data() {
 		return {
 			myHappiness: [
+				{ title: '항상 내편을 들어주는 든든한 가족', name: '두벼리' },
+				{ title: '주말에 낮잠자기', name: '두벼리' },
+				{ title: '나를 웃게 해주는 친구들', name: '두벼리' },
+				{ title: '주말마다 볼 수 있는 선생님', name: '두벼리' },
+				{ title: '기다리고 기다리던 월급날 !!', name: '두벼리' },
+				{ title: '한강 치맥', name: '두벼리' },
+				{ title: '점심시간 산책', name: '두벼리' },
+				{ title: '옥상에서 노을보기', name: '두벼리' },
+				{ title: '영혼이 이끄는대로 가보기', name: '두벼리' },
+				{ title: '좋아하는 사람과 함께하는 순간', name: '두벼리' },
+				{ title: '어른이 되어가는 것', name: '두벼리' },
+				{ title: '나의 작고 소중한 동물친구', name: '두벼리' },
 				{ title: '선생님이 내 이름을 불러주는 것', name: '두벼리' },
 				{ title: '퇴근하고 선생님을 보는 것', name: '두벼리' },
 				{ title: '선생님이랑 하루 일과 쫑알쫑알 하기', name: '두벼리' },
@@ -51,13 +72,18 @@ export default {
 	methods: {
 		onActivated(event) {
 			event.target.style.zIndex = this.zIndex++;
+			document.getElementsByClassName('v-app-bar--fixed')[0].style.zIndex =
+				this.zIndex + 1;
+			document.getElementsByClassName(
+				'v-navigation-drawer--temporary',
+			)[0].style.zIndex = this.zIndex + 2;
 		},
 
 		setPosition(xOrY) {
-			const xStart = 40;
-			const xEnd = 880;
-			const yStart = 100;
-			const yEnd = 200;
+			const xStart = -100;
+			const xEnd = 100;
+			const yStart = -50;
+			const yEnd = 0;
 			let result = 0;
 
 			if (xOrY == 'x') {
@@ -105,12 +131,7 @@ html {
 	-webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 	-moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 	-o-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-	box-shadow: 2px 2px 4px rgba(170, 146, 38, 0.493);
-	-webkit-transition: all 0.2s ease-in;
-	-moz-transition: all 0.2s ease-in;
-	-o-transition: all 0.2s ease-in;
-	-ms-transition: all 0.2s ease-in;
-	transition: all 0.2s ease-in;
+	box-shadow: 2px 2px 8px rgba(170, 146, 38, 0.493);
 	overflow: hidden;
 	white-space: break-spaces !important;
 }
@@ -151,8 +172,8 @@ html {
 
 .stickies .content-container:hover {
 	cursor: pointer;
-	-webkit-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
-	-moz-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
-	-o-box-shadow: 2px 12px 10px rgba(133, 132, 130, 0.459);
+	-webkit-box-shadow: 2px 7px 10px 4px rgba(133, 132, 130, 0.3);
+	-moz-box-shadow: 2px 7px 10px 4px rgba(133, 132, 130, 0.3);
+	-o-box-shadow: 2px 7px 10px rgba(133, 132, 130, 0.3);
 }
 </style>
