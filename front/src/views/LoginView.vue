@@ -1,14 +1,16 @@
 <template>
 	<v-container>
-		<v-row class="pt-14">
-			<v-col cols="12">LOGIN</v-col>
+		<v-row>
+			<v-col cols="12">
+				<p class="font-weight-bold text-center text-h3">Login</p>
+			</v-col>
 		</v-row>
 	</v-container>
 </template>
 
 <script>
 export default {
-	name: 'HmLoginView',
+	name: 'LoginView',
 	components: {},
 	data() {
 		return {};

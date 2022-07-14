@@ -1,6 +1,6 @@
 <template>
 	<v-container class="mainWrap">
-		<v-row class="pt-14">
+		<v-row>
 			<v-col cols="12">
 				<p class="font-weight-bold text-center text-h3">
 					Welcome To The Happiness Museum 🌻
@@ -99,7 +99,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hi+Melody&family=Jua&family=Nanum+Pen+Script&family=Stylish&family=Yeon+Sung&display=swap');
 
 .mainWrap {
-	height: calc(100vh - 64px);
+	/* height: calc(100vh - 64px); */
 }
 
 .vdr,

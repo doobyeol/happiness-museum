@@ -1,7 +1,7 @@
 <template>
 	<v-app id="app">
 		<NavBar></NavBar>
-		<router-view class="" />
+		<router-view class="mt-14" />
 	</v-app>
 </template>
 
@@ -33,6 +33,7 @@ html {
 }
 
 .container {
+	height: calc(100vh - 64px) !important;
 	padding-top: 64px !important;
 }
 </style>
