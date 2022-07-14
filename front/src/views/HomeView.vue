@@ -1,5 +1,5 @@
 <template>
-	<v-container class="mainWrap">
+	<v-container>
 		<v-row>
 			<v-col cols="12">
 				<p class="font-weight-bold text-center text-h3">
@@ -11,17 +11,17 @@
 				<p class="font-weight-bold text-center text-h5">행복이란 무엇일까요?</p>
 			</v-col>
 		</v-row>
-		<v-row class="py-0 mt-0">
+		<v-row>
 			<div class="stickies d-flex flex-wrap justify-center">
 				<VueDragResize
+					v-for="item in myHappiness"
+					:key="item.title"
 					:isActive="false"
 					:preventActiveBehavior="false"
 					:isResizable="false"
-					@clicked="onActivated"
-					v-for="item in myHappiness"
-					:key="item.title"
 					:x="setPosition('x')"
 					:y="setPosition('y')"
+					@clicked="onActivated"
 				>
 					<span>{{ item.title }}</span>
 					<p>- {{ item.name }}</p>
@@ -97,10 +97,6 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hi+Melody&family=Jua&family=Nanum+Pen+Script&family=Stylish&family=Yeon+Sung&display=swap');
-
-.mainWrap {
-	/* height: calc(100vh - 64px); */
-}
 
 .vdr,
 .vdr.active:before {
