@@ -41,7 +41,7 @@
 
 <script>
 export default {
-	name: 'HmHeader',
+	name: 'NavBar',
 	props: {
 		msg: String,
 	},

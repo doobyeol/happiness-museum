@@ -1,17 +1,17 @@
 <template>
 	<v-app id="app">
-		<HmHeader></HmHeader>
+		<NavBar></NavBar>
 		<router-view class="" />
 	</v-app>
 </template>
 
 <script>
-import HmHeader from '@/components/common/HmHeader.vue';
+import NavBar from '@/components/common/NavBar.vue';
 
 export default {
 	name: 'HelloWorld',
 	components: {
-		HmHeader,
+		NavBar,
 	},
 	props: {
 		msg: String,
