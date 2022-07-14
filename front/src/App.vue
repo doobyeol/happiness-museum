@@ -1,17 +1,17 @@
 <template>
 	<v-app id="app">
-		<HmHeader></HmHeader>
-		<router-view class="mt-16" />
+		<NavBar></NavBar>
+		<router-view class="mt-14" />
 	</v-app>
 </template>
 
 <script>
-import HmHeader from '@/components/common/HmHeader.vue';
+import NavBar from '@/components/common/NavBar.vue';
 
 export default {
 	name: 'HelloWorld',
 	components: {
-		HmHeader,
+		NavBar,
 	},
 	props: {
 		msg: String,
@@ -20,11 +20,20 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+	overflow-y: auto !important;
+}
+
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	// text-align: center;
 	color: #2c3e50;
+}
+
+.container {
+	height: calc(100vh - 64px) !important;
+	padding-top: 64px !important;
 }
 </style>
