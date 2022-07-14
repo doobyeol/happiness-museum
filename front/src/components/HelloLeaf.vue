@@ -39,9 +39,6 @@ export default {
 	components: {
 		VueDragResize,
 	},
-	props: {
-		msg: String,
-	},
 	data() {
 		return {
 			myHappiness: [
@@ -66,7 +63,7 @@ export default {
 				{ title: '선생님이랑 애같코 하기', name: '두벼리' },
 				{ title: '잘생긴 선생님 얼굴 구경하기', name: '두벼리' },
 			],
-			zIndex: 0,
+			zIndex: 100,
 		};
 	},
 	methods: {
@@ -100,10 +97,6 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hi+Melody&family=Jua&family=Nanum+Pen+Script&family=Stylish&family=Yeon+Sung&display=swap');
-
-html {
-	overflow-y: auto !important;
-}
 
 .mainWrap {
 	height: calc(100vh - 64px);

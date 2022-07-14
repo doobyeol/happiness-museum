@@ -1,7 +1,7 @@
 <template>
 	<v-app id="app">
 		<HmHeader></HmHeader>
-		<router-view class="mt-16" />
+		<router-view class="" />
 	</v-app>
 </template>
 
@@ -20,11 +20,19 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+	overflow-y: auto !important;
+}
+
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	// text-align: center;
 	color: #2c3e50;
+}
+
+.container {
+	padding-top: 64px !important;
 }
 </style>

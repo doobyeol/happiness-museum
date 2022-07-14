@@ -1,12 +1,6 @@
 <template>
 	<div>
-		<v-app-bar
-			color="white"
-			fixed
-			elevation="4"
-			:fade-img-on-scroll="true"
-			flat
-		>
+		<v-app-bar color="white" fixed elevation="4" flat>
 			<v-toolbar-title>
 				<v-img src="@/assets/logo.png" width="120px"></v-img>
 			</v-toolbar-title>
@@ -23,7 +17,7 @@
 
 		<v-navigation-drawer
 			v-model="drawer"
-			absolute
+			fixed
 			temporary
 			right
 			color="amber lighten-2"
