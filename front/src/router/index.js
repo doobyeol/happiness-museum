@@ -19,6 +19,11 @@ const routes = [
 		name: 'diary',
 		component: () => import('../views/DiaryView.vue'),
 	},
+	{
+		path: '/join',
+		name: 'join',
+		component: () => import('../views/JoinView.vue'),
+	},
 ];
 
 const router = new VueRouter({
