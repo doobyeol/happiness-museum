@@ -24,6 +24,11 @@ const routes = [
 		name: 'join',
 		component: () => import('../views/JoinView.vue'),
 	},
+	{
+		path: '/about',
+		name: 'about',
+		component: () => import('../views/AboutView.vue'),
+	},
 ];
 
 const router = new VueRouter({
