@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="showNavBar">
 		<v-app-bar color="white" fixed elevation="4" flat>
 			<v-toolbar-title>
 				<v-img src="@/assets/logo.png" width="120px"></v-img>
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'NavBar',
 	props: {
@@ -67,6 +69,11 @@ export default {
 		group() {
 			this.drawer = false;
 		},
+	},
+	computed: {
+		...mapGetters({
+			showNavBar: 'common/getShowNavBar',
+		}),
 	},
 };
 </script>

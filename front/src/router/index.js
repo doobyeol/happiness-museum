@@ -1,18 +1,20 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store';
 
 Vue.use(VueRouter);
 
 const routes = [
 	{
 		path: '/',
-		name: 'home',
-		component: () => import('../views/HomeView.vue'),
-	},
-	{
-		path: '/login',
+		alias: ['/', '/login'],
 		name: 'login',
 		component: () => import('../views/LoginView.vue'),
+	},
+	{
+		path: '/home',
+		name: 'home',
+		component: () => import('../views/HomeView.vue'),
 	},
 	{
 		path: '/diary',
@@ -36,5 +38,15 @@ const router = new VueRouter({
 	base: process.env.BASE_URL,
 	routes,
 });
+
+router.beforeEach((to, from, next) => {
+	setShowNavBar(to);
+	next();
+});
+
+function setShowNavBar(to) {
+	const showNavBar = to.name !== 'login';
+	store.commit('common/setShowNavBar', showNavBar);
+}
 
 export default router;
