@@ -10,7 +10,7 @@
 				<v-card class="pa-10">
 					<v-form ref="form" @submit.prevent="submit">
 						<v-text-field
-							v-model="form.id"
+							v-model="form.userId"
 							color="amber darken-1"
 							label="아이디"
 							required
@@ -18,7 +18,7 @@
 							dense
 						/>
 						<v-text-field
-							v-model="form.password"
+							v-model="form.userPw"
 							color="amber darken-1"
 							label="비밀번호"
 							required
@@ -26,7 +26,13 @@
 							dense
 						/>
 
-						<v-btn color="amber darken-1" dark width="100%" elevation="0">
+						<v-btn
+							color="amber darken-1"
+							dark
+							width="100%"
+							elevation="0"
+							@click="handleLogin"
+						>
 							로그인
 						</v-btn>
 					</v-form>
@@ -37,18 +43,33 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	name: 'LoginView',
 	components: {},
 	data() {
 		return {
 			form: {
-				id: '',
-				password: '',
+				userId: '',
+				userPw: '',
 			},
 		};
 	},
-	methods: {},
+	methods: {
+		...mapActions({
+			login: 'auth/login',
+		}),
+		async handleLogin() {
+			const result = await this.login({
+				userId: this.form.userId,
+				userPw: this.form.userPw,
+			});
+			if (result) {
+				this.$router.push('home');
+			}
+		},
+	},
 };
 </script>
 

@@ -10,10 +10,12 @@
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "lodash": "^4.17.21",
     "node": "^16.14.2",
     "register-service-worker": "^1.7.2",
     "vue": "^2.6.14",
     "vue-drag-resize": "^1.5.4",
+    "vue-lodash": "^2.1.2",
     "vue-router": "^3.5.1",
     "vuetify": "^2.6.6",
     "vuex": "^3.6.2"

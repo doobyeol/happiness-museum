@@ -1,12 +1,13 @@
 <template>
 	<v-app id="app">
-		<NavBar></NavBar>
-		<router-view class="mt-14" />
+		<NavBar v-if="showNavBar"></NavBar>
+		<router-view :class="{ 'mt-14': showNavBar }" />
 	</v-app>
 </template>
 
 <script>
 import NavBar from '@/components/common/NavBar.vue';
+import { mapGetters } from 'vuex';
 
 export default {
 	name: 'HelloWorld',
@@ -15,6 +16,11 @@ export default {
 	},
 	props: {
 		msg: String,
+	},
+	computed: {
+		...mapGetters({
+			showNavBar: 'common/getShowNavBar',
+		}),
 	},
 };
 </script>

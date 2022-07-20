@@ -45,7 +45,8 @@ router.beforeEach((to, from, next) => {
 });
 
 function setShowNavBar(to) {
-	const showNavBar = to.name !== 'login';
+	const toName = to.name;
+	const showNavBar = toName !== 'login' && toName !== 'join';
 	store.commit('common/setShowNavBar', showNavBar);
 }
 
