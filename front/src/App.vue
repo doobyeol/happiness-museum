@@ -1,20 +1,30 @@
 <template>
 	<v-app id="app">
-		<NavBar></NavBar>
-		<router-view class="mt-14" />
+		<Loading></Loading>
+		<Popup></Popup>
+		<NavBar v-if="showNavBar"></NavBar>
+		<router-view :class="{ 'mt-14': showNavBar }" />
 	</v-app>
 </template>
 
 <script>
 import NavBar from '@/components/common/NavBar.vue';
+import Popup from '@/components/common/Popup.vue';
+import Loading from '@/components/common/Loading.vue';
+
+import { mapGetters } from 'vuex';
 
 export default {
 	name: 'HelloWorld',
 	components: {
 		NavBar,
+		Popup,
+		Loading,
 	},
-	props: {
-		msg: String,
+	computed: {
+		...mapGetters({
+			showNavBar: 'common/getShowNavBar',
+		}),
 	},
 };
 </script>

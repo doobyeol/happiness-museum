@@ -10,23 +10,33 @@
 				<v-card class="pa-10">
 					<v-form ref="form" @submit.prevent="submit">
 						<v-text-field
-							v-model="form.id"
+							v-model="form.userId"
 							color="amber darken-1"
 							label="아이디"
 							required
 							outlined
 							dense
+							@keyup.enter="handleLogin"
 						/>
 						<v-text-field
-							v-model="form.password"
+							v-model="form.userPw"
 							color="amber darken-1"
 							label="비밀번호"
+							:type="'password'"
 							required
 							outlined
 							dense
+							@keyup.enter="handleLogin"
 						/>
 
-						<v-btn color="amber darken-1" dark width="100%" elevation="0">
+						<v-btn
+							color="amber darken-1"
+							dark
+							width="100%"
+							elevation="0"
+							@click="handleLogin"
+							@keyup.enter="handleLogin"
+						>
 							로그인
 						</v-btn>
 					</v-form>
@@ -37,18 +47,43 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	name: 'LoginView',
 	components: {},
 	data() {
 		return {
 			form: {
-				id: '',
-				password: '',
+				userId: '',
+				userPw: '',
 			},
 		};
 	},
-	methods: {},
+	methods: {
+		...mapActions({
+			login: 'auth/login',
+		}),
+		async handleLogin() {
+			this.$popup.open({
+				title: '팝업 테스트',
+				body: '로그인 하시겠습니까?',
+				ok: async () => {
+					console.log('ok');
+					const result = await this.login({
+						userId: this.form.userId,
+						userPw: this.form.userPw,
+					});
+					if (result) {
+						this.$router.push('home');
+					}
+				},
+				cancel: () => {
+					console.log('cancel');
+				},
+			});
+		},
+	},
 };
 </script>
 

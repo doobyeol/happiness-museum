@@ -42,9 +42,6 @@
 <script>
 export default {
 	name: 'NavBar',
-	props: {
-		msg: String,
-	},
 	data() {
 		return {
 			menu: [
@@ -71,7 +68,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 .v-application--wrap {
 	overflow-x: hidden !important;
 }
