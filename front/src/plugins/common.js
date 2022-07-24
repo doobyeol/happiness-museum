@@ -12,9 +12,6 @@ const myPopup = {
 			},
 			openLoading() {},
 		};
-		vue.showLoading = function () {
-			store.commit('common/showLoading');
-		};
 		vue.prototype.$loading = {
 			show() {
 				store.commit('common/showLoading');
