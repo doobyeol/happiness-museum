@@ -1,5 +1,6 @@
 <template>
 	<v-app id="app">
+		<PopUp></PopUp>
 		<NavBar v-if="showNavBar"></NavBar>
 		<router-view :class="{ 'mt-14': showNavBar }" />
 	</v-app>
@@ -7,15 +8,15 @@
 
 <script>
 import NavBar from '@/components/common/NavBar.vue';
+import PopUp from '@/components/common/PopUp.vue';
+
 import { mapGetters } from 'vuex';
 
 export default {
 	name: 'HelloWorld',
 	components: {
 		NavBar,
-	},
-	props: {
-		msg: String,
+		PopUp,
 	},
 	computed: {
 		...mapGetters({

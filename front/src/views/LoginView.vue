@@ -16,14 +16,17 @@
 							required
 							outlined
 							dense
+							@keyup.enter="handleLogin"
 						/>
 						<v-text-field
 							v-model="form.userPw"
 							color="amber darken-1"
 							label="비밀번호"
+							:type="'password'"
 							required
 							outlined
 							dense
+							@keyup.enter="handleLogin"
 						/>
 
 						<v-btn
@@ -32,6 +35,7 @@
 							width="100%"
 							elevation="0"
 							@click="handleLogin"
+							@keyup.enter="handleLogin"
 						>
 							로그인
 						</v-btn>
@@ -61,13 +65,23 @@ export default {
 			login: 'auth/login',
 		}),
 		async handleLogin() {
-			const result = await this.login({
-				userId: this.form.userId,
-				userPw: this.form.userPw,
+			this.$popUp.open({
+				title: '팝업 테스트',
+				body: '로그인 하시겠습니까?',
+				ok: async () => {
+					console.log('ok');
+					const result = await this.login({
+						userId: this.form.userId,
+						userPw: this.form.userPw,
+					});
+					if (result) {
+						this.$router.push('home');
+					}
+				},
+				cancel: () => {
+					console.log('cancel');
+				},
 			});
-			if (result) {
-				this.$router.push('home');
-			}
 		},
 	},
 };

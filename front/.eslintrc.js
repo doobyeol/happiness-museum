@@ -35,6 +35,12 @@ module.exports = {
 				// spaceBeforeFunctionParen: true,
 			},
 		],
+		'vue/multi-word-component-names': [
+			'error',
+			{
+				ignores: ['default'],
+			},
+		],
 		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 	},
 };
