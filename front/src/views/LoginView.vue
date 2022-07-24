@@ -65,7 +65,7 @@ export default {
 			login: 'auth/login',
 		}),
 		async handleLogin() {
-			this.$popUp.open({
+			this.$popup.open({
 				title: '팝업 테스트',
 				body: '로그인 하시겠습니까?',
 				ok: async () => {

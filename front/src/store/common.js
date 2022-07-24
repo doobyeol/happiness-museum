@@ -11,14 +11,20 @@ export default {
 			ok: null,
 			cancel: null,
 		},
+		loading: {
+			show: false,
+		},
 	}),
 
 	getters: {
 		getShowNavBar(state) {
 			return state.showNavBar;
 		},
-		getPopUp(state) {
+		getPopup(state) {
 			return state.popup;
+		},
+		getLoading(state) {
+			return state.loading;
 		},
 	},
 
@@ -26,19 +32,25 @@ export default {
 		setShowNavBar(state, show) {
 			state.showNavBar = show;
 		},
-		closePopUp(state) {
+		closePopup(state) {
 			state.popup.show = false;
 		},
-		openPopUp(state, popUp) {
+		openPopup(state, popup) {
 			state.popup = {
 				show: true,
-				title: popUp.title,
-				body: popUp.body,
-				type: popUp.type,
-				isConfirm: popUp.isConfirm,
-				ok: popUp.ok,
-				cancel: popUp.cancel,
+				title: popup.title,
+				body: popup.body,
+				type: popup.type,
+				isConfirm: popup.isConfirm,
+				ok: popup.ok,
+				cancel: popup.cancel,
 			};
+		},
+		showLoading(state) {
+			state.loading.show = true;
+		},
+		hideLoading(state) {
+			state.loading.show = false;
 		},
 	},
 

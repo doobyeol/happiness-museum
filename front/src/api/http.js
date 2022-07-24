@@ -1,4 +1,4 @@
-// import Vue from 'vue';
+import Vue from 'vue';
 import axios from 'axios';
 import store from '../store';
 
@@ -11,16 +11,13 @@ function getAuthorization() {
 	}
 }
 
-function getConfig(params) {
+function getConfig() {
 	const authorization = getAuthorization();
 	let config = {
 		headers: {
 			Authorization: authorization ? authorization : '',
 		},
 	};
-	if (params) {
-		config.params = params;
-	}
 	return config;
 }
 
@@ -45,41 +42,40 @@ function handleResponse(response) {
 	return false;
 }
 
+async function request(method, url, config) {
+	config.url = url;
+	config.method = method;
+	try {
+		Vue.prototype.$loading.show();
+		const response = await axios.request(config);
+		return handleResponse(response);
+	} catch (error) {
+		return handleResponse(error);
+	} finally {
+		Vue.prototype.$loading.hide();
+	}
+}
+
 export default {
 	async get(url, params) {
 		// const urlWithParams = url + '?' + Vue._.toQuery(params);
-		try {
-			const response = await axios.get(url, getConfig(params));
-			return handleResponse(response);
-		} catch (error) {
-			return handleResponse(error);
-		}
+		const config = getConfig();
+		config.params = params;
+		return await request('get', url, config);
 	},
 	async post(url, params) {
-		try {
-			const response = await axios.post(url, params, getConfig());
-			return handleResponse(response);
-		} catch (error) {
-			console.log(error);
-			return handleResponse(error);
-		}
+		const config = getConfig();
+		config.data = params;
+		return await request('post', url, config);
 	},
 	async put(url, params) {
-		try {
-			const response = await axios.put(url, params, getConfig());
-			return handleResponse(response);
-		} catch (error) {
-			console.log(error);
-			return handleResponse(error);
-		}
+		const config = getConfig();
+		config.data = params;
+		return await request('put', url, config);
 	},
 	async delete(url, params) {
-		try {
-			const response = await axios.delete(url, getConfig(params));
-			return handleResponse(response);
-		} catch (error) {
-			console.log(error);
-			return handleResponse(error);
-		}
+		const config = getConfig();
+		config.params = params;
+		return await request('delete', url, config);
 	},
 };
