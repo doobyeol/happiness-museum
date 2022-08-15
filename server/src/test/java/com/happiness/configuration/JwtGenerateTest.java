@@ -21,6 +21,7 @@ public class JwtGenerateTest {
 
 //        token += "JwtException";
 
+        System.out.println("token: " + token);
         // Token 유효성 확인
         boolean result;
         try {

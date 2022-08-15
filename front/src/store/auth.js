@@ -27,6 +27,10 @@ export default {
 			state.token = userInfo.token;
 			state.refreshToken = userInfo.refreshToken;
 		},
+		setTokenAndRefreshToken(state, tokenInfo) {
+			state.token = tokenInfo.token;
+			state.refreshToken = tokenInfo.refreshToken;
+		},
 	},
 
 	actions: {
@@ -34,6 +38,17 @@ export default {
 			const data = await http.post('/api/auth/login', payload);
 			if (data) {
 				commit('setLoginInfo', data);
+				return true;
+			} else {
+				return false;
+			}
+		},
+		async refreshToken({ state, commit }) {
+			const data = await http.post('/api/auth/token/refresh', {
+				refreshToken: state.refreshToken,
+			});
+			if (data) {
+				commit('setTokenAndRefreshToken', data);
 				return true;
 			} else {
 				return false;

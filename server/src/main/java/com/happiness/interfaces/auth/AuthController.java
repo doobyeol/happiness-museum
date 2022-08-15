@@ -9,6 +9,7 @@ import com.happiness.interfaces.auth.dto.LoginRequest;
 import com.happiness.interfaces.auth.dto.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.happiness.domain.security.jwt.JwtUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,7 +75,9 @@ public class AuthController {
      * refresh token 재발급
      */
     @PostMapping("/token/refresh")
-    public ResponseDto<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public ResponseDto<TokenResponse> refreshToken(
+        @RequestBody RefreshTokenRequest refreshTokenRequest,
+        HttpServletResponse response) {
         String token = "";
         String refreshToken = "";
 
@@ -85,6 +89,7 @@ public class AuthController {
             token = jwtUtils.generateJwtToken(legacyRefreshToken);
             refreshToken = jwtUtils.generateRefreshJwtToken(token);
         } else {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return ResponseDto.fail(ResultCode.INVALID_REFRESH_TOKEN);
         }
 
