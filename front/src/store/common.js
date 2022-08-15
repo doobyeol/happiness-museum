@@ -40,7 +40,6 @@ export default {
 				show: true,
 				title: popup.title,
 				body: popup.body,
-				type: popup.type,
 				isConfirm: popup.isConfirm,
 				ok: popup.ok,
 				cancel: popup.cancel,

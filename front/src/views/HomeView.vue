@@ -33,6 +33,7 @@
 
 <script>
 import VueDragResize from 'vue-drag-resize';
+import http from '@/api/http';
 
 export default {
 	name: 'HomeView',
@@ -67,6 +68,9 @@ export default {
 		};
 	},
 	methods: {
+		testApi() {
+			http.get('/api/user/leaf');
+		},
 		onActivated(event) {
 			event.target.style.zIndex = this.zIndex++;
 			document.getElementsByClassName('v-app-bar--fixed')[0].style.zIndex =
