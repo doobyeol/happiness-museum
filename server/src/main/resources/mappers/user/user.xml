@@ -18,27 +18,40 @@
         <result column="IS_POSTIT" property="isPostit"/>
     </resultMap>
 
+    <resultMap id="HappinessDto" type="com.happiness.domain.user.dto.HappinessDto">
+        <result column="USER_NM" property="userNm"/>
+        <result column="HAPPINESS" property="happiness"/>
+    </resultMap>
+
     <select id="findUserById" parameterType="String" resultMap="UserDto">
-        SELECT
-        USER_ID
-        , USER_PW
-        , USER_NM
-        , IS_BLOCK
-        , USER_TEL
-        , GENDER
-        , USER_MAIL
-        , ADDRESS
-        , MBTI
-        , BIRTH_DATE
-        , BIRTH_GIFT
-        , HAPPINESS
-        , IS_POSTIT
-        , CREATE_DT
-        , CREATE_ID
-        , UPDATE_DT
-        , UPDATE_ID
+        SELECT /* findUserById */
+              USER_ID
+            , USER_PW
+            , USER_NM
+            , IS_BLOCK
+            , USER_TEL
+            , GENDER
+            , USER_MAIL
+            , ADDRESS
+            , MBTI
+            , BIRTH_DATE
+            , BIRTH_GIFT
+            , HAPPINESS
+            , IS_POSTIT
+            , CREATE_DT
+            , CREATE_ID
+            , UPDATE_DT
+            , UPDATE_ID
         FROM USER_INFO
         WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="findHappinessList" resultMap="HappinessDto">
+        SELECT /* findHappinessList */
+              USER_NM
+            , HAPPINESS
+        FROM USER_INFO UI
+        WHERE IS_POSTIT = 1
     </select>
 
 </mapper>
