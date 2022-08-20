@@ -1,5 +1,9 @@
 import http from '@/api/http';
 
+function setTokenToLocalStorage(token) {
+	localStorage.setItem('token', token);
+}
+
 export default {
 	namespaced: true,
 
@@ -16,6 +20,9 @@ export default {
 		getToken(state) {
 			return state.token;
 		},
+		isLoggedIn(state) {
+			return !!state.token;
+		},
 	},
 
 	mutations: {
@@ -27,11 +34,41 @@ export default {
 			state.token = userInfo.token;
 			state.refreshToken = userInfo.refreshToken;
 		},
+		setTokenAndRefreshToken(state, tokenInfo) {
+			state.token = tokenInfo.token;
+			state.refreshToken = tokenInfo.refreshToken;
+		},
 	},
 
 	actions: {
 		async login({ commit }, payload) {
 			const data = await http.post('/api/auth/login', payload);
+			if (data) {
+				commit('setLoginInfo', data);
+				setTokenToLocalStorage(data.token);
+				return true;
+			} else {
+				return false;
+			}
+		},
+
+		async refreshToken({ state, commit }) {
+			const data = await http.post('/api/auth/token/refresh', {
+				refreshToken: state.refreshToken,
+			});
+			if (data) {
+				commit('setTokenAndRefreshToken', data);
+				setTokenToLocalStorage(data.token);
+				return true;
+			} else {
+				return false;
+			}
+		},
+
+		async getUserInfoByToken({ commit }, token) {
+			const data = await http.post('/api/auth/token/user', {
+				token: token,
+			});
 			if (data) {
 				commit('setLoginInfo', data);
 				return true;

@@ -14,8 +14,8 @@
 		<v-row>
 			<div class="stickies d-flex flex-wrap justify-center">
 				<VueDragResize
-					v-for="item in myHappiness"
-					:key="item.title"
+					v-for="item in happinessList"
+					:key="item.happiness"
 					:isActive="false"
 					:preventActiveBehavior="false"
 					:isResizable="false"
@@ -23,8 +23,8 @@
 					:y="setPosition('y')"
 					@clicked="onActivated"
 				>
-					<span>{{ item.title }}</span>
-					<p>- {{ item.name }}</p>
+					<span>{{ item.happiness }}</span>
+					<p>- {{ item.userNm }}</p>
 				</VueDragResize>
 			</div>
 		</v-row>
@@ -33,6 +33,7 @@
 
 <script>
 import VueDragResize from 'vue-drag-resize';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
 	name: 'HomeView',
@@ -41,32 +42,25 @@ export default {
 	},
 	data() {
 		return {
-			myHappiness: [
-				{ title: '항상 내편을 들어주는 든든한 가족', name: '두벼리' },
-				{ title: '주말에 낮잠자기', name: '두벼리' },
-				{ title: '나를 웃게 해주는 친구들', name: '두벼리' },
-				{ title: '주말마다 볼 수 있는 선생님', name: '두벼리' },
-				{ title: '기다리고 기다리던 월급날 !!', name: '두벼리' },
-				{ title: '한강 치맥', name: '두벼리' },
-				{ title: '점심시간 산책', name: '두벼리' },
-				{ title: '옥상에서 노을보기', name: '두벼리' },
-				{ title: '영혼이 이끄는대로 가보기', name: '두벼리' },
-				{ title: '좋아하는 사람과 함께하는 순간', name: '두벼리' },
-				{ title: '어른이 되어가는 것', name: '두벼리' },
-				{ title: '나의 작고 소중한 동물친구', name: '두벼리' },
-				{ title: '선생님이 내 이름을 불러주는 것', name: '두벼리' },
-				{ title: '퇴근하고 선생님을 보는 것', name: '두벼리' },
-				{ title: '선생님이랑 하루 일과 쫑알쫑알 하기', name: '두벼리' },
-				{ title: '선생님이랑 재밌는거 보면서 같이 저녁 먹기', name: '두벼리' },
-				{ title: '선생님이랑 산책하기', name: '두벼리' },
-				{ title: '선생님이랑 뒹굴거리기', name: '두벼리' },
-				{ title: '선생님이랑 애같코 하기', name: '두벼리' },
-				{ title: '잘생긴 선생님 얼굴 구경하기', name: '두벼리' },
-			],
 			zIndex: 100,
 		};
 	},
+
+	computed: {
+		...mapGetters({
+			happinessList: 'user/getHappinessList',
+		}),
+	},
+
+	created() {
+		this.getHappinessList();
+	},
+
 	methods: {
+		...mapActions({
+			getHappinessList: 'user/getHappinessList',
+		}),
+
 		onActivated(event) {
 			event.target.style.zIndex = this.zIndex++;
 			document.getElementsByClassName('v-app-bar--fixed')[0].style.zIndex =

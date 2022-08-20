@@ -2,13 +2,11 @@ package com.happiness.interfaces.auth;
 
 import com.happiness.domain.common.constants.ResultCode;
 import com.happiness.domain.security.auth.UserDetailsImpl;
-import com.happiness.interfaces.auth.dto.RefreshTokenRequest;
-import com.happiness.interfaces.auth.dto.TokenResponse;
+import com.happiness.interfaces.auth.dto.*;
 import com.happiness.interfaces.common.dto.ResponseDto;
-import com.happiness.interfaces.auth.dto.LoginRequest;
-import com.happiness.interfaces.auth.dto.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.happiness.domain.security.jwt.JwtUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,7 +72,9 @@ public class AuthController {
      * refresh token 재발급
      */
     @PostMapping("/token/refresh")
-    public ResponseDto<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public ResponseDto<TokenResponse> refreshToken(
+        @RequestBody RefreshTokenRequest refreshTokenRequest,
+        HttpServletResponse response) {
         String token = "";
         String refreshToken = "";
 
@@ -85,6 +86,7 @@ public class AuthController {
             token = jwtUtils.generateJwtToken(legacyRefreshToken);
             refreshToken = jwtUtils.generateRefreshJwtToken(token);
         } else {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return ResponseDto.fail(ResultCode.INVALID_REFRESH_TOKEN);
         }
 
@@ -94,6 +96,43 @@ public class AuthController {
                 .build();
 
         return ResponseDto.ok(tokenResponse);
+    }
+
+    /**
+     * token으로 user 정보 조회
+     */
+    @PostMapping("/token/user")
+    public ResponseDto<LoginResponse> findTokenByUserInfo(@RequestBody TokenRequest tokenRequest, HttpServletResponse response) {
+        String token = tokenRequest.getToken();
+        String refreshToken = "";
+
+        // Token 유효성 확인
+        if (jwtUtils.validateJwtToken(token)) {
+            // Token 생성
+            token = jwtUtils.generateJwtToken(token);
+            refreshToken = jwtUtils.generateRefreshJwtToken(token);
+        } else {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            return ResponseDto.fail(ResultCode.INVALID_REFRESH_TOKEN);
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        // 토큰을 생성한 후 userId, userNm, userMail, token, refreshToken을 반환한다.
+        LoginResponse loginResponse = LoginResponse.builder()
+                .userId(userDetails.getUsername())
+                .userNm(userDetails.getUserNm())
+                .userMail(userDetails.getUserMail())
+                .token(token)
+                .refreshToken(refreshToken)
+                .build();
+
+        return ResponseDto.ok(loginResponse);
     }
 
 }
