@@ -10,31 +10,31 @@ const routes = [
 		alias: ['/', '/login'],
 		name: 'login',
 		component: () => import('../views/LoginView.vue'),
-		meta: { checkToken: false },
+		meta: { requiredLogin: false },
 	},
 	{
 		path: '/home',
 		name: 'home',
 		component: () => import('../views/HomeView.vue'),
-		meta: { checkToken: true },
+		meta: { requiredLogin: true },
 	},
 	{
 		path: '/diary',
 		name: 'diary',
 		component: () => import('../views/DiaryView.vue'),
-		meta: { checkToken: true },
+		meta: { requiredLogin: true },
 	},
 	{
 		path: '/join',
 		name: 'join',
 		component: () => import('../views/JoinView.vue'),
-		meta: { checkToken: true },
+		meta: { requiredLogin: true },
 	},
 	{
 		path: '/about',
 		name: 'about',
 		component: () => import('../views/AboutView.vue'),
-		meta: { checkToken: true },
+		meta: { requiredLogin: true },
 	},
 ];
 
@@ -45,27 +45,29 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-	if (to.meta.checkToken && store.getters['auth/isLoggedIn']) {
-	}
-
 	setShowNavBar(to);
-	let token = store.getters['auth/getToken'];
-	console.log(token);
-	if (token) {
+
+	if (to.meta.requiredLogin === false) {
 		next();
 		return;
 	}
 
-	token = loadTokenLocalStorage();
-	if (token) {
-		const result = await store.dispatch('auth/getUserInfoByToken', token);
-		if (result) {
-			next();
+	if (store.getters['auth/isLoggedIn']) {
+		next();
+		return;
+	} else {
+		const token = getTokenInLocalStorage();
+
+		if (token) {
+			const result = await store.dispatch('auth/loadUserInfoByToken', token);
+			if (result) {
+				next();
+			} else {
+				next('/login');
+			}
 		} else {
 			next('/login');
 		}
-	} else {
-		next('/login');
 	}
 });
 
@@ -75,7 +77,7 @@ function setShowNavBar(to) {
 	store.commit('common/setShowNavBar', showNavBar);
 }
 
-function loadTokenLocalStorage() {
+function getTokenInLocalStorage() {
 	const token = localStorage.getItem('token');
 	return token;
 }
