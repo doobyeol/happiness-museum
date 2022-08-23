@@ -63,9 +63,11 @@ router.beforeEach(async (to, from, next) => {
 			if (result) {
 				next();
 			} else {
+				store.commit('auth/setLogout');
 				next('/login');
 			}
 		} else {
+			store.commit('auth/setLogout');
 			next('/login');
 		}
 	}

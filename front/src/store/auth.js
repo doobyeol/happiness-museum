@@ -41,6 +41,15 @@ export default {
 		setToken(state, token) {
 			state.token = token;
 		},
+		setLogout(state) {
+			localStorage.clear();
+			state.userId = '';
+			state.userNm = '';
+			state.userMail = '';
+			state.roles = [];
+			state.token = '';
+			state.refreshToken = '';
+		},
 	},
 
 	actions: {
