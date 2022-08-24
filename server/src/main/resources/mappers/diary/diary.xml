@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.happiness.domain.diary.repository.DiaryMapper">
+    <resultMap id="DiaryDto" type="com.happiness.domain.diary.dto.DiaryDto">
+        <result column="DIARY_NO" property="diaryNo"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="USER_NM" property="userNm"/>
+        <result column="TITLE" property="title"/>
+        <result column="CONTENT" property="content"/>
+        <result column="FILE_URL" property="fileUrl"/>
+        <result column="VIEW" property="view"/>
+        <result column="EMOTION" property="emotion"/>
+        <result column="WEATHER" property="weather"/>
+        <result column="TODAY" property="today"/>
+        <result column="TOMORROW" property="tomorrow"/>
+        <result column="IS_PUBLIC" property="isPublic"/>
+        <result column="CREATE_DT" property="createdDt"/>
+        <result column="CREATE_ID" property="createdId"/>
+        <result column="UPDATE_DT" property="updateDt"/>
+        <result column="UPDATE_ID" property="updateId"/>
+    </resultMap>
+
+    <select id="findDiaryList" resultMap="DiaryDto">
+        SELECT /* findDiaryList */
+              DIARY_NO
+            , USER_ID
+            , USER_NM
+            , TITLE
+            , CONTENT
+            , FILE_URL
+            , VIEW
+            , EMOTION
+            , WEATHER
+            , TODAY
+            , TOMORROW
+            , IS_PUBLIC
+            , CREATE_DT
+            , CREATE_ID
+            , UPDATE_DT
+            , UPDATE_ID
+        FROM DIARY_INFO
+        ORDER BY DIARY_NO DESC
+        LIMIT ${pageable.offset}, ${pageable.pageSize}
+    </select>
+</mapper>

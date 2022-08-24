@@ -99,25 +99,15 @@ public class AuthController {
     }
 
     /**
-     * token으로 user 정보 조회
+     * user 정보 조회
      */
-    @PostMapping("/token/user")
-    public ResponseDto<LoginResponse> findTokenByUserInfo(@RequestBody TokenRequest tokenRequest, HttpServletResponse response) {
-        String token = tokenRequest.getToken();
-        String refreshToken = "";
-
-        // Token 유효성 확인
-        if (jwtUtils.validateJwtToken(token)) {
-            // Token 생성
-            token = jwtUtils.generateJwtToken(token);
-            refreshToken = jwtUtils.generateRefreshJwtToken(token);
-        } else {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return ResponseDto.fail(ResultCode.INVALID_REFRESH_TOKEN);
-        }
-
+    @GetMapping("/token/user")
+    public ResponseDto<LoginResponse> findUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        String token = jwtUtils.generateJwtToken(authentication);
+        String refreshToken = jwtUtils.generateRefreshJwtToken(token);
 
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())

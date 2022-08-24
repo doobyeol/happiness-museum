@@ -5,7 +5,13 @@
 				<v-img src="@/assets/logo.png" width="120px"></v-img>
 			</v-toolbar-title>
 			<v-toolbar-items class="hidden-sm-and-down ml-auto">
-				<v-btn v-for="item in menu" :key="item.title" :to="item.link" text>
+				<v-btn
+					v-for="item in menu"
+					:key="item.title"
+					:to="item.link"
+					text
+					@click="onClickMenuBtn(item)"
+				>
 					{{ item.title }}
 				</v-btn>
 			</v-toolbar-items>
@@ -27,7 +33,11 @@
 					v-model="group"
 					active-class="brown--text text--accent-4"
 				>
-					<v-list-item v-for="item in menu" :key="item.title">
+					<v-list-item
+						v-for="item in menu"
+						:key="item.title"
+						@click="onClickMenuBtn(item)"
+					>
 						<v-list-item-icon>
 							<v-icon color="">{{ item.icon }}</v-icon>
 						</v-list-item-icon>
@@ -40,14 +50,17 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
 	name: 'NavBar',
 	data() {
 		return {
 			menu: [
-				{ icon: 'mdi-bank', title: '박물관 소개' },
-				{ icon: 'mdi-flower', title: '행복 전시' },
-				{ icon: 'mdi-bookmark', title: '소장품' },
+				{ icon: 'mdi-bank', title: '박물관 소개', to: 'about' },
+				{ icon: 'mdi-flower', title: '행복 전시', to: 'diary' },
+				{ icon: 'mdi-bookmark', title: '소장품', to: 'collection' },
+				{ icon: 'mdi-logout', title: '로그아웃', to: 'login' },
 			],
 			drawer: false,
 			group: null,
@@ -55,8 +68,28 @@ export default {
 	},
 
 	methods: {
+		...mapMutations({
+			logout: 'auth/logout',
+		}),
+
 		menuItems() {
 			return this.menu;
+		},
+
+		onClickMenuBtn(item) {
+			if (item.to == 'login') {
+				this.$popup.open({
+					title: '로그아웃',
+					body: '로그아웃 하시겠습니까?',
+					isConfirm: true,
+					ok: async () => {
+						this.logout();
+						this.$router.push(item.to);
+					},
+				});
+			} else {
+				this.$router.push(item.to);
+			}
 		},
 	},
 

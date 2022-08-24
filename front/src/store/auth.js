@@ -38,6 +38,18 @@ export default {
 			state.token = tokenInfo.token;
 			state.refreshToken = tokenInfo.refreshToken;
 		},
+		setToken(state, token) {
+			state.token = token;
+		},
+		logout(state) {
+			localStorage.clear();
+			state.userId = '';
+			state.userNm = '';
+			state.userMail = '';
+			state.roles = [];
+			state.token = '';
+			state.refreshToken = '';
+		},
 	},
 
 	actions: {
@@ -65,10 +77,9 @@ export default {
 			}
 		},
 
-		async getUserInfoByToken({ commit }, token) {
-			const data = await http.post('/api/auth/token/user', {
-				token: token,
-			});
+		async loadUserInfoByToken({ commit }, token) {
+			commit('setToken', token);
+			const data = await http.get('/api/auth/token/user');
 			if (data) {
 				commit('setLoginInfo', data);
 				return true;
