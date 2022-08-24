@@ -62,12 +62,14 @@ export default {
 		}),
 
 		onActivated(event) {
-			event.target.style.zIndex = this.zIndex++;
-			document.getElementsByClassName('v-app-bar--fixed')[0].style.zIndex =
-				this.zIndex + 1;
-			document.getElementsByClassName(
-				'v-navigation-drawer--temporary',
-			)[0].style.zIndex = this.zIndex + 2;
+			if (event.target) {
+				event.target.style.zIndex = this.zIndex++;
+				document.getElementsByClassName('v-app-bar--fixed')[0].style.zIndex =
+					this.zIndex + 1;
+				document.getElementsByClassName(
+					'v-navigation-drawer--temporary',
+				)[0].style.zIndex = this.zIndex + 2;
+			}
 		},
 
 		setPosition(xOrY) {

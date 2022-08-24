@@ -41,7 +41,7 @@ export default {
 		setToken(state, token) {
 			state.token = token;
 		},
-		setLogout(state) {
+		logout(state) {
 			localStorage.clear();
 			state.userId = '';
 			state.userNm = '';

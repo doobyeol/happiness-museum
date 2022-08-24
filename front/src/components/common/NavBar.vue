@@ -69,7 +69,7 @@ export default {
 
 	methods: {
 		...mapMutations({
-			setLogout: 'auth/setLogout',
+			logout: 'auth/logout',
 		}),
 
 		menuItems() {
@@ -78,9 +78,18 @@ export default {
 
 		onClickMenuBtn(item) {
 			if (item.to == 'login') {
-				this.setLogout();
+				this.$popup.open({
+					title: '로그아웃',
+					body: '로그아웃 하시겠습니까?',
+					isConfirm: true,
+					ok: async () => {
+						this.logout();
+						this.$router.push(item.to);
+					},
+				});
+			} else {
+				this.$router.push(item.to);
 			}
-			this.$router.push(item.to);
 		},
 	},
 
