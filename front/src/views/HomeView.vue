@@ -53,12 +53,12 @@ export default {
 	},
 
 	created() {
-		this.getHappinessList();
+		this.fetchHappinessList();
 	},
 
 	methods: {
 		...mapActions({
-			getHappinessList: 'user/getHappinessList',
+			fetchHappinessList: 'user/fetchHappinessList',
 		}),
 
 		onActivated(event) {

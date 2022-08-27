@@ -20,7 +20,7 @@ export default {
 	},
 
 	actions: {
-		async getHappinessList({ commit }) {
+		async fetchHappinessList({ commit }) {
 			const data = await http.get('/api/user/happiness/list');
 			commit('setHappinessList', data);
 		},

@@ -40,7 +40,21 @@
             , UPDATE_DT
             , UPDATE_ID
         FROM DIARY_INFO
-        ORDER BY DIARY_NO DESC
+        WHERE IS_PUBLIC = 1
+        <if test="pageable.sort.sorted">
+            <trim prefix="ORDER BY">
+                <foreach item="order" collection="pageable.sort.orders" separator=",">
+                    ${order.property} ${order.direction}
+                </foreach>
+            </trim>
+        </if>
         LIMIT ${pageable.offset}, ${pageable.pageSize}
     </select>
+
+    <select id="findDiaryTotalCount" resultType="Integer">
+        SELECT COUNT(*) /* findDiaryTotalCount */
+        FROM DIARY_INFO
+        WHERE IS_PUBLIC = 1
+    </select>
+
 </mapper>
