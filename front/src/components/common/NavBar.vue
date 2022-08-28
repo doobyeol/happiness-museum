@@ -103,7 +103,7 @@ export default {
 
 <style scope>
 .v-application--wrap {
-	overflow-x: hidden !important;
+	/* overflow-x: hidden !important; */
 }
 
 header {

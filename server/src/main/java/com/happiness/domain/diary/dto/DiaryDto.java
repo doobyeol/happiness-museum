@@ -1,5 +1,6 @@
 package com.happiness.domain.diary.dto;
 
+import com.happiness.domain.common.dto.CommonDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class DiaryDto {
+public class DiaryDto extends CommonDto {
     private long diaryNo;
     private String userId;
     private String userNm;
