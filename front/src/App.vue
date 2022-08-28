@@ -3,7 +3,7 @@
 		<Loading></Loading>
 		<Popup></Popup>
 		<NavBar v-if="showNavBar"></NavBar>
-		<router-view :class="{ 'mt-14': showNavBar }" />
+		<router-view :class="{ 'mt-6': showNavBar }" />
 	</v-app>
 </template>
 
@@ -11,7 +11,6 @@
 import NavBar from '@/components/common/NavBar.vue';
 import Popup from '@/components/common/Popup.vue';
 import Loading from '@/components/common/Loading.vue';
-
 import { mapGetters } from 'vuex';
 
 export default {

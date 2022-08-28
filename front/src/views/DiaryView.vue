@@ -1,10 +1,26 @@
 <template>
-	<v-container>
-		<v-row ref="diaryContainer">
+	<v-container class="mt-6" ref="diaryContainer">
+		<v-row>
+			<v-col class="d-flex flex-row-reverse" cols="12">
+				<v-fab-transition>
+					<v-btn
+						class="mx-2"
+						color="amber darken-1"
+						dark
+						fab
+						fixed
+						bottom
+						right
+					>
+						<v-icon> mdi-pencil </v-icon>
+					</v-btn>
+				</v-fab-transition>
+			</v-col>
+		</v-row>
+		<v-row>
 			<v-col
 				cols="12"
-				lg="3"
-				md="4"
+				lg="4"
 				sm="6"
 				v-for="item in diaryList"
 				:key="item.diaryNo"
@@ -20,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
 	name: 'DiaryView',
@@ -29,9 +45,10 @@ export default {
 		return {
 			pageParam: {
 				page: 0,
-				size: 10,
+				size: 12,
 				sort: 'create_dt,desc',
 			},
+			scrollHandler: null,
 		};
 	},
 	computed: {
@@ -41,56 +58,42 @@ export default {
 		}),
 	},
 	created() {
+		this.clearDiaryList();
 		this.fetchDiaryList(this.pageParam);
-		// window.addEventListener('scroll', this.scroll);
 	},
 
 	mounted() {
-		console.log('window : ', window);
-		window.onscroll = () => {
-			this.scroll();
-		};
+		this.scrollHandler = this._.debounce(this.handleScroll, 300);
+		window.addEventListener('scroll', this.scrollHandler);
+	},
+
+	destroyed() {
+		window.removeEventListener('scroll', this.scrollHandler);
 	},
 
 	methods: {
 		...mapActions({
 			fetchDiaryList: 'diary/fetchDiaryList',
 		}),
+		...mapMutations({
+			clearDiaryList: 'diary/clearDiaryList',
+		}),
 
 		fetchNextPage() {
-			console.log('##### fetchNextPage');
 			if (this.last) {
 				return;
 			}
 			this.pageParam.page++;
 			this.fetchDiaryList(this.pageParam);
 		},
-		scroll() {
-			console.log('############################################');
-			console.log('####### window.pageYOffset', window.pageYOffset);
-			console.log('####### scrollTop', document.documentElement.scrollTop);
-			console.log('####### document.body.scrollTop', document.body.scrollTop);
-			console.log(
-				'####### diaryContainer',
-				this.$refs.diaryContainer.offsetHeight,
-			);
-			// const maxScrollTop = Math.max(
-			// 	window.pageYOffset,
-			// 	document.documentElement.scrollTop,
-			// 	document.body.scrollTop,
-			// );
-			const offsetHeight = document.documentElement.offsetHeight;
 
-			// console.log('##### maxScrollTop ', maxScrollTop);
-			console.log('##### offsetHeight ', offsetHeight);
-			// let bottomOfWindow = maxScrollTop + window.innerHeight === offsetHeight;
-			// let bottomOfWindow =
-			// 	offsetHeight - this.$refs.diaryContainer.offsetHeight >= 64;
-
-			// if (bottomOfWindow) {
-			// 	console.log('################## fetchNextPage');
-			// 	this.fetchNextPage();
-			// }
+		handleScroll() {
+			let el = this.$refs.diaryContainer;
+			const isBottom =
+				el.scrollHeight - el.offsetHeight <= window.pageYOffset + 100;
+			if (isBottom) {
+				this.fetchNextPage();
+			}
 		},
 	},
 };

@@ -18,18 +18,21 @@ export default {
 	},
 
 	mutations: {
-		setDiaryList(state, diaryList) {
-			state.diaryList = diaryList;
+		appendDiaryList(state, diaryList) {
+			state.diaryList = [...state.diaryList, ...diaryList];
 		},
 		setLast(state, last) {
 			state.last = last;
+		},
+		clearDiaryList(state) {
+			state.diaryList = [];
 		},
 	},
 
 	actions: {
 		async fetchDiaryList({ commit }, param) {
 			const data = await http.get('/api/diary/list', param);
-			commit('setDiaryList', data.content);
+			commit('appendDiaryList', data.content);
 			commit('setLast', data.last);
 		},
 	},
