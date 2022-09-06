@@ -1,13 +1,13 @@
 <template>
 	<div class="text-center">
-		<v-dialog class="loading" v-model="loading.show" width="50">
+		<v-overlay :absolute="false" v-model="loading.show" z-index="100">
 			<v-progress-circular
 				:size="50"
 				color="amber"
 				indeterminate
 				class="mx-auto"
 			></v-progress-circular>
-		</v-dialog>
+		</v-overlay>
 	</div>
 </template>
 
@@ -23,10 +23,3 @@ export default {
 	},
 };
 </script>
-
-<style>
-/* .v-dialog {
-	overflow: hidden !important;
-	box-shadow: unset !important;
-} */
-</style>
