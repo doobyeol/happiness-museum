@@ -20,4 +20,9 @@ public class DiaryService {
         Integer totalCount = diaryMapper.findDiaryTotalCount();
         return new PageImpl(list, pageable, totalCount);
     }
+
+    public DiaryDto saveDiary(DiaryDto diaryDto) {
+        Integer row = diaryMapper.insertDiary(diaryDto);
+        return null;
+    }
  }

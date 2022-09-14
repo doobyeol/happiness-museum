@@ -15,8 +15,8 @@
         <result column="TODAY" property="today"/>
         <result column="TOMORROW" property="tomorrow"/>
         <result column="IS_PUBLIC" property="isPublic"/>
-        <result column="CREATE_DT" property="createdDt"/>
-        <result column="CREATE_ID" property="createdId"/>
+        <result column="CREATE_DT" property="createDt"/>
+        <result column="CREATE_ID" property="createId"/>
         <result column="UPDATE_DT" property="updateDt"/>
         <result column="UPDATE_ID" property="updateId"/>
     </resultMap>
@@ -56,5 +56,41 @@
         FROM DIARY_INFO
         WHERE IS_PUBLIC = 1
     </select>
+
+    <insert id="insertDiary" parameterType="com.happiness.domain.diary.dto.DiaryDto" useGeneratedKeys="true" keyProperty="diaryNo">
+        INSERT INTO DIARY_INFO( /* insertDiary */
+            USER_ID
+            , USER_NM
+            , TITLE
+            , CONTENT
+            , FILE_URL
+            , `VIEW`
+            , EMOTION
+            , WEATHER
+            , TODAY
+            , TOMORROW
+            , IS_PUBLIC
+            , CREATE_DT
+            , CREATE_ID
+            , UPDATE_DT
+            , UPDATE_ID
+        ) VALUES(
+            #{userId}
+            , #{userNm}
+            , #{title}
+            , #{content}
+            , #{fileUrl}
+            , 0
+            , #{emotion}
+            , #{weather}
+            , #{today}
+            , #{tomorrow}
+            , #{isPublic}
+            , NOW()
+            , #{userId}
+            , NOW()
+            , #{userId}
+        )
+    </insert>
 
 </mapper>

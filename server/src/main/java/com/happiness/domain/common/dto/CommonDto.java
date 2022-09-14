@@ -8,8 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CommonDto {
-    private String createdDt;
-    private String createdId;
+    private String createDt;
+    private String createId;
     private String updateDt;
     private String updateId;
 }

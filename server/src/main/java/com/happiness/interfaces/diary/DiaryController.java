@@ -20,4 +20,9 @@ public class DiaryController {
     public ResponseDto<Page<DiaryDto>> getDiaryList(Pageable pageable) {
         return ResponseDto.ok(diaryService.findDiaryList(pageable));
     }
+
+    @PostMapping("")
+    public ResponseDto<DiaryDto> saveDiary(DiaryDto diaryDto) {
+        return  ResponseDto.ok(diaryService.saveDiary(diaryDto));
+    }
 }
