@@ -1,4 +1,5 @@
 package com.happiness.domain.security.auth;
+import com.happiness.domain.security.helper.RequestContextHelper;
 import com.happiness.domain.user.dto.UserDto;
 import com.happiness.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +25,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        UserDto UserDto = userService.findUserById(userId);
+        UserDto userDto = userService.findUserById(userId);
 
-        RequestContextHolder.getRequestAttributes().setAttribute("loginUserInfo", UserDto, RequestAttributes.SCOPE_SESSION);
+        RequestContextHelper.setLoginUserInfo(userDto);
 
-        return UserDetailsImpl.build(UserDto);
+        return UserDetailsImpl.build(userDto);
     }
 
 }

@@ -11,6 +11,7 @@
 						fixed
 						bottom
 						right
+						@click="handleWriteDiary"
 					>
 						<v-icon> mdi-pencil </v-icon>
 					</v-btn>
@@ -94,6 +95,13 @@ export default {
 			if (isBottom) {
 				this.fetchNextPage();
 			}
+		},
+
+		handleWriteDiary() {
+			this.$router.push({
+				name: 'diaryDetail',
+				params: { isWrite: true },
+			});
 		},
 	},
 };

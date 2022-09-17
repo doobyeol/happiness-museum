@@ -11,4 +11,6 @@ import java.util.List;
 public interface DiaryMapper {
     List<DiaryDto> findDiaryList(@Param("pageable") Pageable pageable);
     Integer findDiaryTotalCount();
+    DiaryDto findDiaryByDiaryNo(@Param("diaryNo") Long diaryNo);
+    Integer insertDiary(DiaryDto diaryDto);
 }

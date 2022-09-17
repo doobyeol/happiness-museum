@@ -21,8 +21,15 @@ const routes = [
 	{
 		path: '/diary',
 		name: 'diary',
-		component: () => import('../views/DiaryView.vue'),
+		component: () => import('../views/diary/DiaryView.vue'),
 		meta: { requiredLogin: true },
+	},
+	{
+		path: '/diaryDetail',
+		name: 'diaryDetail',
+		component: () => import('../views/diary/DiaryDetailView.vue'),
+		meta: { requiredLogin: true },
+		props: true,
 	},
 	{
 		path: '/join',

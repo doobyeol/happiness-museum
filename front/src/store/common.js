@@ -33,7 +33,14 @@ export default {
 			state.showNavBar = show;
 		},
 		closePopup(state) {
-			state.popup.show = false;
+			state.popup = {
+				show: false,
+				title: '',
+				body: '',
+				isConfirm: false,
+				ok: null,
+				cancel: null,
+			};
 		},
 		openPopup(state, popup) {
 			state.popup = {
@@ -46,10 +53,10 @@ export default {
 			};
 		},
 		showLoading(state) {
-			state.loading.show = true;
+			state.loading = { show: true };
 		},
 		hideLoading(state) {
-			state.loading.show = false;
+			state.loading = { show: false };
 		},
 	},
 
