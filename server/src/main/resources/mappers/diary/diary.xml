@@ -57,6 +57,28 @@
         WHERE IS_PUBLIC = 1
     </select>
 
+    <select id="findDiaryByDiaryNo" parameterType="Long" resultMap="DiaryDto">
+        SELECT /* findDiaryByDiaryNo */
+            DIARY_NO
+            , USER_ID
+            , USER_NM
+            , TITLE
+            , CONTENT
+            , FILE_URL
+            , VIEW
+            , EMOTION
+            , WEATHER
+            , TODAY
+            , TOMORROW
+            , IS_PUBLIC
+            , CREATE_DT
+            , CREATE_ID
+            , UPDATE_DT
+            , UPDATE_ID
+        FROM DIARY_INFO
+        WHERE DIARY_NO = #{diaryNo}
+    </select>
+
     <insert id="insertDiary" parameterType="com.happiness.domain.diary.dto.DiaryDto" useGeneratedKeys="true" keyProperty="diaryNo">
         INSERT INTO DIARY_INFO( /* insertDiary */
             USER_ID
