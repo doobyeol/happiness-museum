@@ -1,9 +1,40 @@
 <template>
 	<v-container class="mt-6">
-		상세보기 페이지
-		<h1 v-if="isWrite">isWrite</h1>
-		<h1 v-if="isRead">isRead</h1>
-		<h1 v-if="isModify">isModify</h1>
+		<v-form ref="form" v-model="ui.validForm" lazy-validation>
+			<v-menu
+				ref="datePickerMenu"
+				v-model="ui.datePickerMenu"
+				:close-on-content-click="false"
+				:return-value.sync="form.targetDt"
+				transition="scale-transition"
+				offset-y
+				min-width="auto"
+			>
+				<template v-slot:activator="{ on, attrs }">
+					<v-text-field
+						v-model="form.targetDt"
+						label="날짜"
+						prepend-icon="mdi-calendar"
+						readonly
+						v-bind="attrs"
+						v-on="on"
+					></v-text-field>
+				</template>
+				<v-date-picker v-model="form.targetDt" no-title scrollable>
+					<v-spacer></v-spacer>
+					<v-btn text color="primary" @click="ui.datePickerMenu = false">
+						취소
+					</v-btn>
+					<v-btn
+						text
+						color="primary"
+						@click="$refs.datePickerMenu.save(form.targetDt)"
+					>
+						확인
+					</v-btn>
+				</v-date-picker>
+			</v-menu>
+		</v-form>
 	</v-container>
 </template>
 
@@ -26,12 +57,19 @@ export default {
 			require: false,
 		},
 	},
-	// data() {
-	// 	return {
-	// 		key: value,
-	// 	};
-	// },
-	// created() {},
+	data() {
+		return {
+			ui: {
+				datePickerMenu: false,
+				validForm: false,
+			},
+			form: {
+				targetDt: '',
+			},
+		};
+	},
+	created() {},
+	methods: {},
 };
 </script>
 
