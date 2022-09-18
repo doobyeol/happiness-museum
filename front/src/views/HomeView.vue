@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+	<v-container class="">
 		<v-row>
 			<v-col cols="12">
 				<p class="font-weight-bold text-center text-h3">
@@ -93,6 +93,10 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hi+Melody&family=Jua&family=Nanum+Pen+Script&family=Stylish&family=Yeon+Sung&display=swap');
+
+.container {
+	overflow-x: hidden;
+}
 
 .vdr,
 .vdr.active:before {
