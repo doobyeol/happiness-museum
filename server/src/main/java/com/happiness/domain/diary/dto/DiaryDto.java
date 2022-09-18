@@ -21,4 +21,5 @@ public class DiaryDto extends CommonDto {
     private String today;
     private String tomorrow;
     private boolean isPublic;
+    private String targetDt;
 }
