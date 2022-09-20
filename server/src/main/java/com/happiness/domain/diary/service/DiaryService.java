@@ -5,6 +5,7 @@ import com.happiness.domain.common.exceptions.BizException;
 import com.happiness.domain.diary.dto.DiaryDto;
 import com.happiness.domain.diary.repository.DiaryMapper;
 import com.happiness.domain.user.dto.UserDto;
+import com.happiness.interfaces.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -52,5 +53,20 @@ public class DiaryService {
             throw new BizException(ResultCode.FAILED_SAVE);
         }
         return diaryMapper.findDiaryByDiaryNo(diaryDto.getDiaryNo());
+    }
+
+
+    public void removeDiary(UserDto userDto, DiaryDto diaryDto) {
+        DiaryDto oldDairyDto = diaryMapper.findDiaryByDiaryNo(diaryDto.getDiaryNo());
+        if (oldDairyDto == null) {
+            throw new BizException(ResultCode.INVALID_REQUEST);
+        }
+        if (!StringUtils.equals(oldDairyDto.getCreateId(), userDto.getUserId())) {
+            throw new BizException(ResultCode.INVALID_REQUESTER);
+        }
+        Integer row = diaryMapper.deleteDiary(diaryDto);
+        if (row < 1) {
+            throw new BizException(ResultCode.FAILED_DELETE);
+        }
     }
  }

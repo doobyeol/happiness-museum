@@ -134,4 +134,9 @@
             , UPDATE_ID = #{updateId}
         WHERE DIARY_NO = #{diaryNo}
     </update>
+
+    <delete id="deleteDiary" parameterType="com.happiness.domain.diary.dto.DiaryDto">
+        DELETE FROM happiness.DIARY_INFO
+        WHERE DIARY_NO = #{diaryNo}
+    </delete>
 </mapper>

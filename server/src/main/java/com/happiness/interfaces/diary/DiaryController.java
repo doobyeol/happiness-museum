@@ -35,4 +35,11 @@ public class DiaryController {
         return  ResponseDto.ok(diaryService.modifyDiary(userDto, diaryDto));
     }
 
+    @DeleteMapping("")
+    public ResponseDto<Integer> removeDiary(DiaryDto diaryDto) {
+        UserDto userDto = RequestContextHelper.getLoginUserInfo();
+        diaryService.removeDiary(userDto, diaryDto);
+        return  ResponseDto.ok();
+    }
+
 }
