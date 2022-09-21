@@ -36,7 +36,7 @@ public class DiaryController {
     }
 
     @DeleteMapping("")
-    public ResponseDto<Integer> removeDiary(DiaryDto diaryDto) {
+    public ResponseDto removeDiary(DiaryDto diaryDto) {
         UserDto userDto = RequestContextHelper.getLoginUserInfo();
         diaryService.removeDiary(userDto, diaryDto);
         return  ResponseDto.ok();
