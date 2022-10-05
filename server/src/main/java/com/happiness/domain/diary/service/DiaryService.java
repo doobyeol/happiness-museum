@@ -6,6 +6,7 @@ import com.happiness.domain.diary.dto.DiaryDto;
 import com.happiness.domain.diary.repository.DiaryMapper;
 import com.happiness.domain.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -35,5 +36,35 @@ public class DiaryService {
             throw new BizException(ResultCode.FAILED_SAVE);
         }
         return diaryMapper.findDiaryByDiaryNo(diaryDto.getDiaryNo());
+    }
+
+    public DiaryDto modifyDiary(UserDto userDto, DiaryDto diaryDto) {
+        DiaryDto oldDairyDto = diaryMapper.findDiaryByDiaryNo(diaryDto.getDiaryNo());
+        validationRequest(userDto, oldDairyDto);
+        diaryDto.setUpdateId(userDto.getUserId());
+        Integer row = diaryMapper.updateDiary(diaryDto);
+        if (row < 1) {
+            throw new BizException(ResultCode.FAILED_SAVE);
+        }
+        return diaryMapper.findDiaryByDiaryNo(diaryDto.getDiaryNo());
+    }
+
+
+    public void removeDiary(UserDto userDto, DiaryDto diaryDto) {
+        DiaryDto oldDairyDto = diaryMapper.findDiaryByDiaryNo(diaryDto.getDiaryNo());
+        validationRequest(userDto, oldDairyDto);
+        Integer row = diaryMapper.deleteDiary(diaryDto);
+        if (row < 1) {
+            throw new BizException(ResultCode.FAILED_DELETE);
+        }
+    }
+
+    private void validationRequest(UserDto userDto, DiaryDto oldDairyDto) {
+        if (oldDairyDto == null) {
+            throw new BizException(ResultCode.INVALID_REQUEST);
+        }
+        if (!StringUtils.equals(oldDairyDto.getCreateId(), userDto.getUserId())) {
+            throw new BizException(ResultCode.INVALID_REQUESTER);
+        }
     }
  }

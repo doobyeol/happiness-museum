@@ -13,4 +13,6 @@ public interface DiaryMapper {
     Integer findDiaryTotalCount();
     DiaryDto findDiaryByDiaryNo(@Param("diaryNo") Long diaryNo);
     Integer insertDiary(DiaryDto diaryDto);
+    Integer updateDiary(DiaryDto diaryDto);
+    Integer deleteDiary(DiaryDto diaryDto);
 }

@@ -7,12 +7,9 @@ import com.happiness.domain.user.dto.UserDto;
 import com.happiness.interfaces.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +26,20 @@ public class DiaryController {
     @PostMapping("")
     public ResponseDto<DiaryDto> saveDiary(DiaryDto diaryDto) {
         UserDto userDto = RequestContextHelper.getLoginUserInfo();
-
-        log.info("userDto {}", userDto);
         return  ResponseDto.ok(diaryService.saveDiary(userDto, diaryDto));
     }
+
+    @PutMapping("")
+    public ResponseDto<DiaryDto> modifyDiary(DiaryDto diaryDto) {
+        UserDto userDto = RequestContextHelper.getLoginUserInfo();
+        return  ResponseDto.ok(diaryService.modifyDiary(userDto, diaryDto));
+    }
+
+    @DeleteMapping("")
+    public ResponseDto removeDiary(DiaryDto diaryDto) {
+        UserDto userDto = RequestContextHelper.getLoginUserInfo();
+        diaryService.removeDiary(userDto, diaryDto);
+        return  ResponseDto.ok();
+    }
+
 }

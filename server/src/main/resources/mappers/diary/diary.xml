@@ -120,4 +120,23 @@
         )
     </insert>
 
+    <update id="updateDiary" parameterType="com.happiness.domain.diary.dto.DiaryDto">
+        UPDATE DIARY_INFO /* updateDiary */
+            SET
+            TITLE = #{title}
+            , CONTENT = #{content}
+            , FILE_URL = #{fileUrl}
+            , EMOTION = #{emotion}
+            , WEATHER = #{weather}
+            , IS_PUBLIC = #{isPublic}
+            , TARGET_DT = #{targetDt}
+            , UPDATE_DT = NOW()
+            , UPDATE_ID = #{updateId}
+        WHERE DIARY_NO = #{diaryNo}
+    </update>
+
+    <delete id="deleteDiary" parameterType="com.happiness.domain.diary.dto.DiaryDto">
+        DELETE FROM happiness.DIARY_INFO
+        WHERE DIARY_NO = #{diaryNo}
+    </delete>
 </mapper>
